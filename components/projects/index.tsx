@@ -17,6 +17,8 @@ const Projects = () => {
     ContentfulResponse[]
   >([]);
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       if (selectedTech.length === 0) {

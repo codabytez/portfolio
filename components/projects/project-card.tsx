@@ -28,6 +28,7 @@ const techColors = [
   { name: "Gatsby", color: "#B7A1CE" },
   { name: "Flutter", color: "#A0BDE1" },
   { name: "Next.js", color: "#000000" },
+  { name: "NextJS", color: "#000000" },
 ];
 
 const ProjectCard: NextPage<ProjectCardProps> = ({

@@ -14,7 +14,7 @@ const MyApp: NextPage<{
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 15000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);

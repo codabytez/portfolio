@@ -27,34 +27,97 @@ import {
   useTopArtists,
 } from "@/hooks/spotify";
 
+interface Tab {
+  id: string;
+  label: string;
+  content: string;
+  category: string;
+}
+
 const About: NextPage = () => {
   const { data: token } = useSpotifyAccessToken();
   const { data: topTracks } = useTopTracks(token?.access_token!);
   const { data: topArtists } = useTopArtists(token?.access_token!);
   const { data, isSuccess, isLoading } = useStarredGists();
+
   const [activeTab, setActiveTab] = useState("personal-info");
-  const [contentTab, setContentTab] = useState("bio");
+  const [openTabs, setOpenTabs] = useState<Tab[]>([
+    { id: "bio", label: "bio", content: "bio", category: "personal-info" },
+  ]);
+  const [currentTab, setCurrentTab] = useState("bio");
 
-  const code =
-    contentTab === "interests"
-      ? interests
-      : contentTab === "education"
-      ? education
-      : contentTab === "experience"
-      ? experience
-      : contentTab === "hard-skills"
-      ? hardSkills
-      : contentTab === "soft-skills"
-      ? softSkills
-      : contentTab === "sports"
-      ? sports
-      : contentTab === "movies"
-      ? movies
-      : contentTab === "music"
-      ? music(topTracks!, topArtists!)
-      : bio;
+  const getCodeForTab = (contentTab: string) => {
+    switch (contentTab) {
+      case "interests":
+        return interests;
+      case "education":
+        return education;
+      case "experience":
+        return experience;
+      case "hard-skills":
+        return hardSkills;
+      case "soft-skills":
+        return softSkills;
+      case "sports":
+        return sports;
+      case "movies":
+        return movies;
+      case "music":
+        return music(topTracks!, topArtists!);
+      default:
+        return bio;
+    }
+  };
 
-  const formattedCode = code
+  const addTab = (tabId: string, category: string) => {
+    const existingTab = openTabs.find((tab) => tab.id === tabId);
+    if (!existingTab) {
+      const newTab: Tab = {
+        id: tabId,
+        label: tabId,
+        content: tabId,
+        category: category,
+      };
+      setOpenTabs((prev) => [...prev, newTab]);
+    }
+    setCurrentTab(tabId);
+    setActiveTab(category);
+  };
+
+  const closeTab = (tabId: string) => {
+    const updatedTabs = openTabs.filter((tab) => tab.id !== tabId);
+    setOpenTabs(updatedTabs);
+
+    if (currentTab === tabId) {
+      if (updatedTabs.length > 0) {
+        const newCurrentTab = updatedTabs[updatedTabs.length - 1];
+        setCurrentTab(newCurrentTab.id);
+        setActiveTab(newCurrentTab.category);
+      } else {
+        // If no tabs left, add default bio tab
+        const defaultTab: Tab = {
+          id: "bio",
+          label: "bio",
+          content: "bio",
+          category: "personal-info",
+        };
+        setOpenTabs([defaultTab]);
+        setCurrentTab("bio");
+        setActiveTab("personal-info");
+      }
+    }
+  };
+
+  const switchTab = (tabId: string) => {
+    const tab = openTabs.find((t) => t.id === tabId);
+    if (tab) {
+      setCurrentTab(tabId);
+      setActiveTab(tab.category);
+    }
+  };
+
+  const currentCode = getCodeForTab(currentTab);
+  const formattedCode = currentCode
     .replace(/\/\*\*\s*\*\s*/g, "")
     .replace(/\s*\*\s*/g, "\n")
     .replace(/\s*\\\s*/g, " ")
@@ -69,7 +132,7 @@ const About: NextPage = () => {
       <AboutSidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        setContentTab={setContentTab}
+        setContentTab={addTab}
       />
 
       <motion.div
@@ -83,16 +146,39 @@ const About: NextPage = () => {
           msOverflowStyle: "none",
         }}
       >
-        <div className="w-max h-10 border-r border-line hidden lg:flex items-center gap-11 px-3.5 shrink-0">
-          <p>{activeTab}</p>
-          <button>
-            <Image src={close} alt="close" />
-          </button>
+        {/* Tab Bar */}
+        <div className="hidden lg:flex border-b border-line">
+          <AnimatePresence>
+            {openTabs.map((tab) => (
+              <motion.div
+                key={tab.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.2 }}
+                className={`flex items-center h-10 px-3 border-r border-line cursor-pointer hover:bg-gray-800/30 ${
+                  currentTab === tab.id ? "bg-gray-800/50" : ""
+                }`}
+                onClick={() => switchTab(tab.id)}
+              >
+                <p className="text-sm mr-2">{tab.label}</p>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeTab(tab.id);
+                  }}
+                  className="p-1 hover:bg-gray-700/50 rounded"
+                >
+                  <Image src={close} alt="close" className="w-3 h-3" />
+                </button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         <p className="lg:hidden mt-6 px-3.5">
           <span className="text-secondary-400">{`// ${activeTab}`}</span>{" "}
-          <span> {`/ ${contentTab}`} </span>
+          <span> {`/ ${currentTab}`} </span>
         </p>
 
         <div
@@ -103,6 +189,7 @@ const About: NextPage = () => {
           }}
         >
           <motion.div
+            key={currentTab}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
@@ -120,7 +207,7 @@ const About: NextPage = () => {
                 msOverflowStyle: "none",
               }}
             >
-              <CodeBlock code={code} language="javascript" />
+              <CodeBlock code={currentCode} language="javascript" />
             </div>
             <p className="lg:hidden max-w-[650px]">{formattedCode}</p>
 

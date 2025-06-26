@@ -22,13 +22,13 @@ const listItemVariants = {
 };
 
 const PersonalSidebar: NextPage<{
-  setContentTab: (key: string) => void;
+  setContentTab: (key: string, category: string) => void;
 }> = ({ setContentTab }) => {
   const [isOpen, setIsOpen] = useState<string>("bio");
 
   const toggleIsOpen = (key: string) => {
     setIsOpen((prev) => (prev === key ? prev : key));
-    setContentTab(key);
+    setContentTab(key, "personal-info");
   };
 
   return (

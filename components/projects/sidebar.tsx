@@ -13,6 +13,32 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { DropdownArrowFill } from "../dropdown-arrow";
 
+// Utility to normalize tech names
+const normalizeTech = (name: string) =>
+  name.toLowerCase().replace(/[\.\s\-]/g, "");
+
+// Map of normalized keys to canonical display names
+const techAliasMap: Record<string, string> = {
+  nextjs: "Next.js",
+  react: "React",
+  html: "HTML",
+  css: "CSS",
+  vue: "Vue",
+  flutter: "Flutter",
+  tailwind: "Tailwind",
+};
+
+// Project types array now uses normalized keys and canonical names
+const projectTypes = [
+  { key: "nextjs", name: "Next.js", icon: nextjs },
+  { key: "react", name: "React", icon: react },
+  { key: "html", name: "HTML", icon: html },
+  { key: "css", name: "CSS", icon: css },
+  { key: "vue", name: "Vue", icon: vue },
+  { key: "flutter", name: "Flutter", icon: flutter },
+  { key: "tailwind", name: "Tailwind", icon: tailwind },
+];
+
 const listItemVariants = {
   initial: { opacity: 0, y: 20 },
   animate: {
@@ -27,19 +53,9 @@ const listItemVariants = {
   },
 };
 
-const projectTypes = [
-  { name: "Next.js", icon: nextjs },
-  { name: "React", icon: react },
-  { name: "HTML", icon: html },
-  { name: "CSS", icon: css },
-  { name: "Vue", icon: vue },
-  { name: "Flutter", icon: flutter },
-  { name: "Tailwind", icon: tailwind },
-];
-
 const ProjectSidebar: NextPage<{
-  handleSelect: (name: string) => void;
-  selectedTech: string[];
+  handleSelect: (normalizedKey: string) => void;
+  selectedTech: string[]; // This should hold normalized keys like "nextjs"
 }> = ({ handleSelect, selectedTech }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
@@ -67,29 +83,33 @@ const ProjectSidebar: NextPage<{
           }`}
         >
           {isOpen &&
-            projectTypes.map(({ name, icon }) => (
-              <motion.div
-                variants={listItemVariants}
-                key={name}
-                className="flex gap-6 items-center"
-              >
-                <CustomCheckbox onChange={() => handleSelect(name)} />
-                <div
-                  className={`flex gap-2 items-center ${
-                    selectedTech.includes(name) ? "opacity-100" : "opacity-40"
-                  }`}
+            projectTypes.map(({ key, name, icon }) => {
+              const isSelected = selectedTech
+                .map(normalizeTech)
+                .includes(normalizeTech(key));
+
+              return (
+                <motion.div
+                  variants={listItemVariants}
+                  key={key}
+                  className="flex gap-6 items-center"
                 >
-                  <Image src={icon} alt={name} className="shrink-0" />
-                  <p
-                    className={
-                      selectedTech.includes(name) ? "text-secondary-400" : ""
-                    }
+                  <CustomCheckbox
+                    onChange={() => handleSelect(normalizeTech(key))}
+                  />
+                  <div
+                    className={`flex gap-2 items-center ${
+                      isSelected ? "opacity-100" : "opacity-40"
+                    }`}
                   >
-                    {name}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                    <Image src={icon} alt={name} className="shrink-0" />
+                    <p className={isSelected ? "text-secondary-400" : ""}>
+                      {name}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
         </motion.div>
       </div>
     </motion.div>

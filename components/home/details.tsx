@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { motion } from "framer-motion";
 import TypingAnimation from "./typing-animation";
 import DiscordPresence from "../discord-presence";
+import Button from "../UI/button";
 
 const Details: NextPage = () => {
   return (
@@ -34,6 +35,22 @@ const Details: NextPage = () => {
         >
           <TypingAnimation text="> Front-end developer" />
         </motion.h3>
+
+        {/* CTA Button here */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 1.2 }}
+          className="mt-6"
+        >
+          <Button
+            variant="primary"
+            href="mailto:chidiobinna0001@gmail.com?subject=Let's work together&body=Hi Obinna, I'd like to discuss a project opportunity..."
+            target="_blank"
+          >
+            Hire me
+          </Button>
+        </motion.div>
       </motion.div>
 
       <motion.div
