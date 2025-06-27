@@ -17,8 +17,6 @@ const Projects = () => {
     ContentfulResponse[]
   >([]);
 
-  console.log(data);
-
   useEffect(() => {
     if (data) {
       if (selectedTech.length === 0) {
@@ -28,8 +26,8 @@ const Projects = () => {
           data.filter((project: ContentfulResponse) =>
             project.fields.tags.some((tech) =>
               selectedTech
-                .map((item) => item.toLowerCase())
-                .includes(tech.toLowerCase())
+                .map((item) => normalizeTech(item))
+                .includes(normalizeTech(tech))
             )
           )
         );
@@ -37,13 +35,18 @@ const Projects = () => {
     }
   }, [selectedTech, data]);
 
+  const normalizeTech = (name: string) =>
+    name.toLowerCase().replace(/[\.\s\-]/g, "");
+
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {
       setSelectedTech(
-        selectedTech.filter((item) => item.toLowerCase() !== name.toLowerCase())
+        selectedTech.filter(
+          (item) => normalizeTech(item) !== normalizeTech(name)
+        )
       );
     } else {
-      setSelectedTech([...selectedTech, name]);
+      setSelectedTech([...selectedTech, normalizeTech(name)]);
     }
   };
 

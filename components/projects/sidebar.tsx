@@ -17,17 +17,6 @@ import { DropdownArrowFill } from "../dropdown-arrow";
 const normalizeTech = (name: string) =>
   name.toLowerCase().replace(/[\.\s\-]/g, "");
 
-// Map of normalized keys to canonical display names
-const techAliasMap: Record<string, string> = {
-  nextjs: "Next.js",
-  react: "React",
-  html: "HTML",
-  css: "CSS",
-  vue: "Vue",
-  flutter: "Flutter",
-  tailwind: "Tailwind",
-};
-
 // Project types array now uses normalized keys and canonical names
 const projectTypes = [
   { key: "nextjs", name: "Next.js", icon: nextjs },
