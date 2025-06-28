@@ -28,6 +28,7 @@ const techColors = [
   { name: "Gatsby", color: "#B7A1CE" },
   { name: "Flutter", color: "#A0BDE1" },
   { name: "Next.js", color: "#000000" },
+  { name: "NextJS", color: "#000000" },
 ];
 
 const ProjectCard: NextPage<ProjectCardProps> = ({
@@ -54,7 +55,7 @@ const ProjectCard: NextPage<ProjectCardProps> = ({
       ? gatsby
       : tags[0].toLowerCase() === "flutter"
       ? flutter
-      : tags[0].toLowerCase() === "next.js"
+      : tags[0].toLowerCase() === "next.js" || "nextjs"
       ? nextjs
       : "";
 
@@ -85,9 +86,9 @@ const ProjectCard: NextPage<ProjectCardProps> = ({
             transition={{ duration: 0.5, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            whileDrag={{ scale: 1.1, rotate: 5, zIndex: 100 }}
-            drag
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+            // whileDrag={{ scale: 1.1, rotate: 5, zIndex: 100 }}
+            // drag
+            // dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           >
             <div className="w-full h-36 relative overflow-hidden">
               <motion.div

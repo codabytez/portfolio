@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Fira_Code as firaCode } from "next/font/google";
 import "./globals.css";
-import MyApp from "@/components/_app";
+import MyApp from "@/components/app";
 import CustomCursor from "@/components/UI/custom-cursor";
 
 const fira = firaCode({

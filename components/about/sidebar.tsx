@@ -18,7 +18,7 @@ import HobbySidebar from "./hobby/hobby-sidebar";
 interface AboutSidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  setContentTab: (tab: string) => void;
+  setContentTab: (tab: string, category: string) => void;
 }
 
 const initialTabs = [
@@ -127,6 +127,12 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
     setIsOpen((prev) => (prev === key ? "" : key));
   };
 
+  const handleTabClick = (tabName: string, defaultContent: string) => {
+    setActiveTab(tabName);
+    toggleOpen(tabName);
+    setContentTab(defaultContent, tabName);
+  };
+
   return (
     <motion.div
       variants={sidebarVariants}
@@ -154,20 +160,19 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
             <motion.div key={name} variants={listItemVariants}>
               <button
                 key={name}
-                onClick={() => {
-                  setActiveTab(name);
-                  toggleOpen(name);
-                  setContentTab(
+                onClick={() =>
+                  handleTabClick(
+                    name,
                     name === "professional-info"
                       ? "experience"
                       : name === "hobbies"
                       ? "sports"
                       : "bio"
-                  );
-                }}
+                  )
+                }
                 className={`${
                   activeTab === name ? "opacity-100" : "opacity-40"
-                } hover:opacity-60`}
+                } hover:opacity-80`}
               >
                 <Image src={icon} alt={name} className="shrink-0" />
               </button>
@@ -240,7 +245,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
             onClick={() => {
               toggleOpen("personal-info");
               setActiveTab("personal-info");
-              setContentTab("bio");
+              setContentTab("bio", "personal-info");
             }}
             key={"personal-info"}
           >
@@ -273,7 +278,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
             onClick={() => {
               toggleOpen("professional-info");
               setActiveTab("professional-info");
-              setContentTab("experience");
+              setContentTab("experience", "professional-info");
             }}
             key={"professional-info"}
           >
@@ -306,7 +311,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
             onClick={() => {
               toggleOpen("hobbies");
               setActiveTab("hobbies");
-              setContentTab("sports");
+              setContentTab("sports", "hobbies");
             }}
             key={"hobbies"}
           >
@@ -392,29 +397,25 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
             onClick={() => toggleOpen("contacts")}
             key={"contacts"}
           >
-            <DropdownArrowFill isOpen={isOpen === "contacts"} />
+            <DropdownArrowFill isOpen />
             <p className="text-secondary-400 font-light">contacts</p>
           </button>
 
           <motion.div
             layout
             initial={{ opacity: 0 }}
-            animate={{ opacity: isOpen === "contacts" ? 1 : 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className={`flex flex-col gap-2 transition-all duration-300 ${
-              isOpen === "contacts" ? "p-4" : ""
-            }`}
+            className="flex flex-col gap-2 transition-all duration-300 p-4"
           >
-            {isOpen === "contacts" && (
-              <Link
-                href={"mailto:" + SOCIALS.EMAIL}
-                className="flex gap-2 items-center hover:text-secondary-400"
-              >
-                <Image src={mail} alt="mail" className="shrink-0" />
-                send mail
-              </Link>
-            )}
+            <Link
+              href={"mailto:" + SOCIALS.EMAIL}
+              className="flex gap-2 items-center hover:text-secondary-400"
+            >
+              <Image src={mail} alt="mail" className="shrink-0" />
+              send mail
+            </Link>
           </motion.div>
         </motion.div>
       </div>

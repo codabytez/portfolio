@@ -22,13 +22,13 @@ const listItemVariants = {
 };
 
 const ProfSidebar: NextPage<{
-  setContentTab: (key: string) => void;
+  setContentTab: (key: string, category: string) => void;
 }> = ({ setContentTab }) => {
   const [isOpen, setIsOpen] = useState<string>("experience");
 
   const toggleIsOpen = (key: string) => {
     setIsOpen((prev) => (prev === key ? prev : key));
-    setContentTab(key);
+    setContentTab(key, "professional-info");
   };
 
   return (
@@ -40,16 +40,13 @@ const ProfSidebar: NextPage<{
       transition={{ staggerChildren: 0.3, delayChildren: 0.2 }}
       className="flex flex-col gap-2 border-t border-line pt-5 pb-7 px-4"
     >
-      <motion.div
-        className="flex gap-3 items-center"
-        key={10}
+      <motion.button
+        className="flex gap-3 items-center w-max group"
+        onClick={() => toggleIsOpen("experience")}
+        key={"experience"}
         variants={listItemVariants}
       >
-        <DropdownArrow
-          isOpen={isOpen === "experience"}
-          toggle={() => toggleIsOpen("experience")}
-          key={"experience"}
-        />
+        <DropdownArrow isOpen={isOpen === "experience"} />
         <div className="flex gap-2 items-center">
           <Image src={orangeFolder} alt="orange folder" className="shrink-0" />
           <p
@@ -60,18 +57,15 @@ const ProfSidebar: NextPage<{
             experience
           </p>
         </div>
-      </motion.div>
+      </motion.button>
 
-      <motion.div
-        className="flex gap-3 items-center"
-        key={11}
+      <motion.button
+        className="flex gap-3 items-center w-max group"
+        onClick={() => toggleIsOpen("hard-skills")}
+        key={"hard-skills"}
         variants={listItemVariants}
       >
-        <DropdownArrow
-          isOpen={isOpen === "hard-skills"}
-          toggle={() => toggleIsOpen("hard-skills")}
-          key={"hard-skills"}
-        />
+        <DropdownArrow isOpen={isOpen === "hard-skills"} />
         <div className="flex gap-2 items-center">
           <Image src={greenFolder} alt="green folder" className="shrink-0" />
           <p
@@ -82,18 +76,15 @@ const ProfSidebar: NextPage<{
             hard-skills
           </p>
         </div>
-      </motion.div>
+      </motion.button>
 
-      <motion.div
-        className="flex gap-3 items-center"
-        key={12}
+      <motion.button
+        className="flex gap-3 items-center w-max group"
+        onClick={() => toggleIsOpen("soft-skills")}
+        key={"soft-skills"}
         variants={listItemVariants}
       >
-        <DropdownArrow
-          isOpen={isOpen === "soft-skills"}
-          toggle={() => toggleIsOpen("soft-skills")}
-          key={"soft-skills"}
-        />
+        <DropdownArrow isOpen={isOpen === "soft-skills"} />
         <div className="flex gap-2 items-center">
           <Image src={blueFolder} alt="blue folder" className="shrink-0" />
           <p
@@ -104,7 +95,7 @@ const ProfSidebar: NextPage<{
             soft-skills
           </p>
         </div>
-      </motion.div>
+      </motion.button>
     </motion.div>
   );
 };

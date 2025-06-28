@@ -1,5 +1,7 @@
 "use client";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/navigation";
 import Button from "../UI/button";
 import Image from "next/image";
 import blue from "@/public/blue.svg";
@@ -15,9 +17,10 @@ import leftArrow from "@/public/left-arrow.svg";
 import rightArrow from "@/public/right-arrow.svg";
 import { useSnakeGameController } from "@/hooks/use-game-controller";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { PAGES } from "@/constants";
 
 const GameBoard: NextPage = () => {
+  const { push } = useRouter();
   const [gameMode, setGameMode] = useState<"standard" | "endless">("standard");
   const [highestScore, setHighestScore] = useState<number>(
     window !== undefined ? Number(window.localStorage.getItem("highScore")) : 0
@@ -225,7 +228,11 @@ const GameBoard: NextPage = () => {
             </Button>
           </div>
         </div>
-        <Button variant="ghost" className="self-end">
+        <Button
+          variant="ghost"
+          className="self-end"
+          onClick={() => push(PAGES.ABOUT)}
+        >
           skip
         </Button>
       </div>

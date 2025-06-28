@@ -6,6 +6,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   variant: "primary" | "secondary" | "ghost";
   className?: string;
   href?: string;
+  target?: string;
 }
 
 const Button: NextPage<ButtonProps> = ({
@@ -13,6 +14,7 @@ const Button: NextPage<ButtonProps> = ({
   variant,
   className,
   href,
+  target,
   ...props
 }) => {
   const btnVariant =
@@ -29,6 +31,7 @@ const Button: NextPage<ButtonProps> = ({
       <Link
         href={href}
         className={`text-sm md-text-base rounded-lg px-3.5 py-2.5 shadow-md transition-all duration-300 ${btnVariant} ${className}`}
+        target={target}
       >
         {children}
       </Link>
