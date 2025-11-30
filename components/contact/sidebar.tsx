@@ -97,30 +97,27 @@ const ContactSidebar: NextPage = () => {
       >
         <button
           className="h-10 flex gap-3 px-3 items-center w-full shrink-0 bg-line hover:opacity-60 lg:bg-transparent"
-          onClick={() => toggleIsOpen("contact")}
           key="contact"
         >
-          <DropdownArrowFill isOpen={isOpen === "contact"} />
+          <DropdownArrowFill isOpen />
           <p className="text-secondary-400 font-light">contacts</p>
         </button>
 
         <motion.div
           layout
           initial={{ opacity: 0 }}
-          animate={{ opacity: isOpen === "contact" ? 1 : 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="flex flex-col gap-2 transition-all duration-300"
         >
-          {isOpen === "contact" && (
-            <Link
-              href={"mailto:" + SOCIALS.EMAIL}
-              className="flex gap-2 items-center hover:text-secondary-400 border-t border-line p-4"
-            >
-              <Image src={mail} alt="mail" className="shrink-0" />
-              send-mail
-            </Link>
-          )}
+          <Link
+            href={"mailto:" + SOCIALS.EMAIL}
+            className="flex gap-2 items-center hover:text-secondary-400 border-t border-line p-4"
+          >
+            <Image src={mail} alt="mail" className="shrink-0" />
+            send-mail
+          </Link>
         </motion.div>
       </motion.div>
 

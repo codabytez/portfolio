@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://admin.obinnachidi.com",
+      "permanent": false
+    }
+  ]
+}
