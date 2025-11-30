@@ -13,6 +13,7 @@ import emailjs from "@emailjs/browser";
 
 const Contact: NextPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -29,6 +30,7 @@ const Contact: NextPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     if (form.name && form.email && form.message) {
       emailjs
         .send(
@@ -43,9 +45,15 @@ const Contact: NextPage = () => {
           String(process.env.NEXT_PUBLIC_EMAILJS_USER_ID)
         )
         .then(() => {
+          setIsLoading(false);
           setIsSuccess(true);
         });
     }
+  };
+
+  const handleSendNewMessage = () => {
+    setIsSuccess(false);
+    setForm({ name: "", email: "", message: "" });
   };
 
   return (
@@ -78,12 +86,13 @@ const Contact: NextPage = () => {
           }}
         >
           {isSuccess ? (
-            <SendSuccess setIsSuccess={setIsSuccess} />
+            <SendSuccess onSendNewMessage={handleSendNewMessage} />
           ) : (
             <ContactForm
               form={form}
               handleChange={handleChange}
               onSubmit={handleSubmit}
+              isLoading={isLoading}
             />
           )}
           <div className="h-full w-[1px] bg-line hidden lg:block basis-[1px]" />

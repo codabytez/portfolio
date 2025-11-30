@@ -4,8 +4,8 @@ import Button from "../UI/button";
 import { motion } from "framer-motion";
 
 const SendSuccess: NextPage<{
-  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ setIsSuccess }) => {
+  onSendNewMessage: () => void;
+}> = ({ onSendNewMessage }) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
@@ -36,7 +36,7 @@ const SendSuccess: NextPage<{
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
         >
-          <Button onClick={() => setIsSuccess(false)} variant="secondary">
+          <Button onClick={onSendNewMessage} variant="secondary">
             send-new-message
           </Button>
         </motion.div>
