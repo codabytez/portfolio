@@ -2,10 +2,10 @@ import { NextPage } from "next";
 import Image from "next/image";
 import markdown from "@/public/markdown.svg";
 import { DropdownArrow } from "@/components/dropdown-arrow";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 
-const listItemVariants = {
+const listItemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,

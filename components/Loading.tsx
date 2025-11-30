@@ -67,7 +67,7 @@ const LoadingPage: NextPage = () => {
                 keySplines=".5 0 .5 1;.5 0 .5 1"
                 repeatCount="indefinite"
                 begin="-.4"
-              ></animate>
+              />
             </circle>
             <circle
               fill="#43D9AD"
@@ -85,7 +85,7 @@ const LoadingPage: NextPage = () => {
                 keySplines=".5 0 .5 1;.5 0 .5 1"
                 repeatCount="indefinite"
                 begin="-.2"
-              ></animate>
+              />
             </circle>
             <circle
               fill="#43D9AD"
@@ -103,7 +103,7 @@ const LoadingPage: NextPage = () => {
                 keySplines=".5 0 .5 1;.5 0 .5 1"
                 repeatCount="indefinite"
                 begin="0"
-              ></animate>
+              />
             </circle>
           </svg>
         </div>
@@ -128,12 +128,15 @@ const LoadingPage: NextPage = () => {
           <p className="text-xs sm:text-base">
             <span className="text-accent-200">import</span>{" "}
             <span className="text-secondary-300">{"{ NextPage }"}</span> from{" "}
-            <span className="text-accent-100">{"'next'"}</span>;
+            <span className="text-accent-100">&apos;next&apos;</span>;
           </p>
           <p className="text-xs sm:text-base">
             <span className="text-accent-200">import</span>{" "}
             <span className="text-secondary-300">ThemeProvider</span> from{" "}
-            <span className="text-accent-100">{"'@theme/ThemeProvider'"}</span>;
+            <span className="text-accent-100">
+              &apos;@theme/ThemeProvider&apos;
+            </span>
+            ;
             <br /> <br />
           </p>
           <p className="text-xs sm:text-base">
@@ -154,9 +157,9 @@ const LoadingPage: NextPage = () => {
             <span className="text-accent-200">p</span>&gt;
           </p>
           <p className="ml-12 text-xs sm:text-base lg:hidden">
-            &lt;<span className="text-accent-200">p</span> {'className="'}
+            &lt;<span className="text-accent-200">p</span> className=&quot;
             <span className="text-accent-100">text-accent-200</span>
-            {'"'}&gt; <br />
+            &quot;&gt; <br />
             &nbsp;&nbsp; For best experience, open this{" "}
             <br className="md:hidden" />
             <span className="pl-5 sm:pl-7 md:pl-0 inline-block">

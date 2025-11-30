@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+echo '🚀🔍 Running final checks before pushing to remote...'
+
+echo '📦 Building the project...'
+# Build check - ensures the project can be built successfully
+pnpm run build ||
+(
+    echo '❌🔥 Build failed! Fix the errors above before pushing. 🔥❌
+           Your code cannot be built. Please fix the build errors and try again.'
+    false
+)
+
+# echo '🧪 Running tests (if available)...'
+# Run tests if you have them
+# pnpm run test ||
+# (
+#     echo '❌ Tests failed! Fix failing tests before pushing.'
+#     false
+# )
+
+echo '✅✅✅ All checks passed! Pushing to remote... ✅✅✅'
+echo '🎉 Great work! Your code is on its way to the repository! 🎉'

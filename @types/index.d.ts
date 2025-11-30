@@ -1,4 +1,4 @@
-interface GithubGistDataTypes {
+interface IGithubGistDataTypes {
   description: string;
   files: Record<string, { content: string }>;
   public?: boolean;
@@ -7,19 +7,19 @@ interface GithubGistDataTypes {
 
 // spotify types
 
-interface ExternalUrls {
+interface IExternalUrls {
   spotify: string;
 }
 
-interface Context {
-  external_urls: ExternalUrls;
+interface IContext {
+  external_urls: IExternalUrls;
   href: string;
   type: string;
   uri: string;
 }
 
-interface Artist {
-  external_urls: ExternalUrls;
+interface IArtist {
+  external_urls: IExternalUrls;
   href: string;
   id: string;
   name: string;
@@ -27,11 +27,11 @@ interface Artist {
   uri: string;
 }
 
-interface Album {
+interface IAlbum {
   album_type: string;
-  artists: Artist[];
+  artists: IArtist[];
   available_markets: string[];
-  external_urls: ExternalUrls;
+  external_urls: IExternalUrls;
   href: string;
   id: string;
   images: { height: number; url: string; width: number }[];
@@ -43,15 +43,15 @@ interface Album {
   uri: string;
 }
 
-interface Item {
-  album: Album;
-  artists: Artist[];
+interface IItem {
+  album: IAlbum;
+  artists: IArtist[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
   external_ids: { isrc: string };
-  external_urls: ExternalUrls;
+  external_urls: IExternalUrls;
   href: string;
   id: string;
   is_local: boolean;
@@ -63,36 +63,36 @@ interface Item {
   uri: string;
 }
 
-interface Disallows {
+interface IDisallows {
   resuming: boolean;
   toggling_repeat_context: boolean;
   toggling_repeat_track: boolean;
   toggling_shuffle: boolean;
 }
 
-interface Actions {
-  disallows: Disallows;
+interface IActions {
+  disallows: IDisallows;
 }
 
-interface Image {
+interface IImage {
   url: string;
   height: number;
   width: number;
 }
 
-interface Followers {
+interface IFollowers {
   href: null;
   total: number;
 }
 
-interface ExplicitContent {
+interface IExplicitContent {
   filter_enabled: boolean;
   filter_locked: boolean;
 }
 
-interface TopArtistItem {
-  external_urls: ExternalUrls;
-  followers: Followers;
+interface ITopArtistItem {
+  external_urls: IExternalUrls;
+  followers: IFollowers;
   genres: string[];
   href: string;
   id: string;
@@ -103,19 +103,19 @@ interface TopArtistItem {
   uri: string;
 }
 
-interface ExternalIds {
+interface IExternalIds {
   isrc: string;
 }
 
-interface TopTracksItem {
-  album: Album;
-  artists: Artist[];
+interface ITopTracksItem {
+  album: IAlbum;
+  artists: IArtist[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  external_ids: ExternalIds;
-  external_urls: ExternalUrls;
+  external_ids: IExternalIds;
+  external_urls: IExternalUrls;
   href: string;
   id: string;
   is_local: boolean;
@@ -127,11 +127,11 @@ interface TopTracksItem {
   uri: string;
 }
 
-interface LanyardData {
+interface ILanyardData {
   kv: Record<string, unknown>;
-  spotify: Spotify | null;
-  discord_user: DiscordUser;
-  activities: Activity[];
+  spotify: ISpotify | null;
+  discord_user: IDiscordUser;
+  activities: IActivity[];
   discord_status: string;
   active_on_discord_web: boolean;
   active_on_discord_desktop: boolean;
@@ -139,16 +139,16 @@ interface LanyardData {
   listening_to_spotify: boolean;
 }
 
-interface Spotify {
+interface ISpotify {
   track_id: string;
-  timestamps: Timestamps;
+  timestamps: ITimestamps;
   album: string;
   album_art_url: string;
   artist: string;
   song: string;
 }
 
-interface DiscordUser {
+interface IDiscordUser {
   id: string;
   username: string;
   avatar: string;
@@ -161,39 +161,123 @@ interface DiscordUser {
   public_flags: number;
 }
 
-interface Activity {
+interface IActivity {
   id: string;
   name: string;
   type: number;
-  timestamps: Timestamps;
-  emoji?: Emoji;
+  timestamps: ITimestamps;
+  emoji?: IEmoji;
   created_at: number;
   state?: string;
   session_id?: string;
   details?: string;
-  assets?: Assets;
+  assets?: IAssets;
   sync_id?: string;
-  party?: Party;
+  party?: IParty;
   flags?: number;
   application_id?: string;
 }
 
-interface Emoji {
+interface IEmoji {
   name: string;
 }
 
-interface Timestamps {
+interface ITimestamps {
   start: number;
   end?: number;
 }
 
-interface Assets {
+interface IAssets {
   large_image: string;
   large_text: string;
   small_image?: string;
   small_text?: string;
 }
 
-interface Party {
+interface IParty {
   id: string;
+}
+
+interface ICodeStringProps {
+  form: {
+    name: string;
+    email: string;
+    message: string;
+  };
+}
+
+interface IContactFormProps {
+  isLoading: boolean;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  form: { name: string; email: string; message: string };
+  handleChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+}
+
+interface IProjectCardProps extends IContentfulResponse {
+  index: number;
+  isLoading: boolean;
+}
+
+interface ISnakeGameOptions {
+  snakeSize?: number;
+  foodSize?: number;
+  snakeSpeed?: number;
+  winScore?: number;
+  gameMode?: "standard" | "endless";
+}
+
+interface ISnake {
+  x: number;
+  y: number;
+}
+
+interface ICodeBlockProps {
+  code: string;
+  language: string;
+  showLineNumbers?: boolean;
+  backgroundColor?: string;
+  borderRadius?: string;
+  padding?: string;
+  style?:
+    | {
+        [key: string]: React.CSSProperties;
+      }
+    | undefined;
+}
+
+interface IAboutSidebarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  setContentTab: (tab: string, category: string) => void;
+}
+
+interface ITab {
+  id: string;
+  label: string;
+  content: string;
+  category: string;
+}
+
+interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+}
+
+interface ITextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label: string;
+  height?: string;
+}
+
+interface ICustomCheckboxProps {
+  onChange: () => void;
+}
+interface IButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  variant: "primary" | "secondary" | "ghost";
+  className?: string;
+  href?: string;
+  target?: string;
 }

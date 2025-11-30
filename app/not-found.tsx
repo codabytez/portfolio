@@ -149,8 +149,8 @@ const NotFound: NextPage = () => (
       transition={{ duration: 0.7, delay: 0.6, ease: "easeInOut" }}
       className="text-secondary-100 text-body text-center max-w-lg px-4"
     >
-      The page {"you're"} looking for is lost in the vastness of space.{" "}
-      {"Don't"} worry, our team of cyber explorers is on the case!
+      The page you&apos;re looking for is lost in the vastness of space.
+      Don&apos;t worry, our team of cyber explorers is on the case!
     </motion.div>
     <motion.div
       initial={{ opacity: 0 }}

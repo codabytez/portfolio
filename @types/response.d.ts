@@ -11,13 +11,13 @@
 //     GISTS_BY_USER: (username: string) => `/users/${username}/gists`,
 //   };
 
-interface ApiResponse<T> {
+interface IApiResponse<T> {
   message: string;
   status: number;
   data: T;
 }
 
-interface MyGistsResponse {
+interface IMyGistsResponse {
   url: string;
   forks_url: string;
   commits_url: string;
@@ -65,26 +65,59 @@ interface MyGistsResponse {
   truncated: boolean;
 }
 
-interface SpotifyAccessTokenResponse {
+interface ISpotifyAccessTokenResponse {
   access_token: string;
   token_type: string;
   expires_in: number;
   scope: string;
 }
 
-interface SpotifyNowPlayingResponse {
+interface IArtist {
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  name: string;
+  type: string;
+  uri: string;
+}
+
+interface IAlbum {
+  album_type: string;
+  artists: IArtist[];
+  available_markets: string[];
+  external_urls: IExternalUrls;
+  href: string;
+  id: string;
+  images: { height: number; url: string; width: number }[];
+  name: string;
+  release_date: string;
+  release_date_precision: string;
+  total_tracks: number;
+  type: string;
+  uri: string;
+}
+
+interface IItem {
+  album: IAlbum;
+  artists: IArtist[];
+  available_markets: string[];
+  disc_number: number;
+  name: string;
+}
+
+interface ISpotifyNowPlayingResponse {
   timestamp: number;
   context: Context;
   progress_ms: number;
-  item: Item;
+  item: IItem;
   currently_playing_type: string;
-  actions: Actions;
+  actions: IActions;
   is_playing: boolean;
 }
 
-interface SpotifyUserResponse {
+interface ISpotifyUserResponse {
   display_name: string;
-  external_urls: ExternalUrls;
+  external_urls: IExternalUrls;
   href: string;
   id: string;
   images: Image[];
@@ -93,12 +126,12 @@ interface SpotifyUserResponse {
   followers: Followers;
   country: string;
   product: string;
-  explicit_content: ExplicitContent;
+  explicit_content: IExplicitContent;
   email: string;
 }
 
-interface SpotifyTopArtistsResponse {
-  items: TopArtistItem[];
+interface ISpotifyTopArtistsResponse {
+  items: ITopArtistItem[];
   total: number;
   limit: number;
   offset: number;
@@ -107,8 +140,8 @@ interface SpotifyTopArtistsResponse {
   previous: null;
 }
 
-interface SpotifyTopTracksResponse {
-  items: TopTracksItem[];
+interface ISpotifyTopTracksResponse {
+  items: ITopTracksItem[];
   total: number;
   limit: number;
   offset: number;
@@ -117,7 +150,7 @@ interface SpotifyTopTracksResponse {
   previous: null;
 }
 
-interface ContentfulResponse {
+interface IContentfulResponse {
   metadata: {
     tags: string[];
   };
@@ -179,7 +212,7 @@ interface ContentfulResponse {
   };
 }
 
-interface LanyardResponse {
-  data: LanyardData;
+interface ILanyardResponse {
+  data: ILanyardData;
   success: boolean;
 }

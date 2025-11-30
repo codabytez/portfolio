@@ -9,11 +9,11 @@ import CodeBlock from "../code-block";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceStrict } from "date-fns";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 import SnippetSkeleton from "./snippet-skeleton";
 
-const contentVariants = {
+const contentVariants: Variants = {
   initial: {
     opacity: 0,
     y: 20,
@@ -29,7 +29,7 @@ const contentVariants = {
   },
 };
 
-const fetchGistFileContent = async (gist: MyGistsResponse) => {
+const fetchGistFileContent = async (gist: IMyGistsResponse) => {
   if (!gist || !gist.files) {
     return null;
   }
@@ -40,7 +40,7 @@ const fetchGistFileContent = async (gist: MyGistsResponse) => {
 };
 
 const CodeSnippet: NextPage<{
-  gist: MyGistsResponse;
+  gist: IMyGistsResponse;
 }> = ({ gist }) => {
   const { data: fileContent, isLoading } = useQuery({
     queryKey: ["gistFileContent", gist],

@@ -1,0 +1,72 @@
+#!/usr/bin/env sh
+
+# Get the current branch name
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# List of protected branches
+PROTECTED_BRANCHES="^(main|staging|dev)$"
+
+# Check if current branch is protected
+if echo "$BRANCH" | grep -qE "$PROTECTED_BRANCHES"; then
+    echo "🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫"
+    echo "❌ HOLD UP! You're trying to commit directly to '$BRANCH'"
+    echo "❌ Direct commits to protected branches are NOT allowed!"
+    echo ""
+    echo "✅ Please create a feature branch instead:"
+    echo "   git checkout -b feat/your-feature-name"
+    echo ""
+    echo "✅ Or switch to an existing feature branch:"
+    echo "   git checkout your-branch-name"
+    echo "🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫"
+    exit 1
+fi
+
+echo '🏗️👷 Running checks on your code before committing 🔍🧐'
+
+echo '🎨✨ Styling your work...'
+pnpm format ||
+(
+    echo '🤢🤮🤢🤮 Its so ugly!! - Your styling looks disgusting. 🤢🤮🤢🤮
+            Prettier Check Failed. Running pnpm run format...';
+    pnpm run format;
+    git add .;
+    echo '✨ Formatting complete and changes added. Committing with the previous commit message...';
+    git commit --amend --no-edit;
+    echo '✅✅ Amended commit with the new changes. Please try to push again.';
+)
+
+# check format
+echo '🏗️👷 Checking for Prettier errors 🔍🧐'
+pnpm check-format ||
+(
+    echo '😭😭😭😭 Its so ugly!! - Your formatting looks disgusting. 🤢😭😭😭
+    Prettier Check Failed. Running pnpm run format...';
+    pnpm format;
+    git add .;
+    echo '✨ Formatting complete and changes added. Committing with the previous commit message...';
+    git commit --amend --no-edit;
+    echo '✅✅ Amended commit with the new changes. Please try to push again.'
+    exit 1
+)
+
+echo '🏗️👷 Checking for ESLint errors 🔍🧐'
+pnpm lint ||
+(
+    echo '😤🏀👋😤 Get that beans code out of here! 😤🏀👋😤
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+    false
+)
+
+echo '🏗️👷 Checking for TypeScript errors 🔍🧐'
+pnpm check-types ||
+(
+    echo '🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
+           Are you seriously trying to write that? Make the changes required above.'
+    false
+)
+
+
+
+echo '✅✅✅✅ You win this time... I am committing this now. ✅✅✅✅'
+echo '✅✅ Awesome work! ✅✅'
+echo '🚀⛅ Run git push to upload your changes to the remote repository ⛅🚀'

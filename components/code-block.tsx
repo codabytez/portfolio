@@ -2,21 +2,7 @@ import { NextPage } from "next";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-interface CodeBlockProps {
-  code: string;
-  language: string;
-  showLineNumbers?: boolean;
-  backgroundColor?: string;
-  borderRadius?: string;
-  padding?: string;
-  style?:
-    | {
-        [key: string]: React.CSSProperties;
-      }
-    | undefined;
-}
-
-const CodeBlock: NextPage<CodeBlockProps> = ({
+const CodeBlock: NextPage<ICodeBlockProps> = ({
   code,
   language,
   showLineNumbers = true,

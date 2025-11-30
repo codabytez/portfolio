@@ -1,10 +1,6 @@
 import { NextPage } from "next";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
-export const Input: NextPage<InputProps> = ({ label, id, name, ...props }) => {
+export const Input: NextPage<IInputProps> = ({ label, id, name, ...props }) => {
   return (
     <div className="flex flex-col gap-2.5">
       <label htmlFor={id} className="font-medium text-secondary-100">
@@ -17,19 +13,13 @@ export const Input: NextPage<InputProps> = ({ label, id, name, ...props }) => {
         autoComplete="off"
         aria-autocomplete="none"
         className="h-10 px-3 border border-line rounded-lg bg-primary-300 text-secondary-100 placeholder:text-secondary-100 focus:shadow-input focus:border-secondary-100 focus:outline-none focus:ring-0 transition-all duration-300 ease-in-out"
-        {...props} //eslint-disable-line
+        {...props}
       />
     </div>
   );
 };
 
-interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
-  height?: string;
-}
-
-export const TextArea: NextPage<TextAreaProps> = ({
+export const TextArea: NextPage<ITextAreaProps> = ({
   label,
   id,
   name,
@@ -57,7 +47,7 @@ export const TextArea: NextPage<TextAreaProps> = ({
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
-        {...props} //eslint-disable-line
+        {...props}
       />
     </div>
   );

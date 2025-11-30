@@ -2,18 +2,18 @@
 "use client";
 import { motion } from "framer-motion";
 import {
-  useSpotifyAccessToken,
   useNowPlaying,
+  useSpotifyAccessToken,
   useUserProfile,
 } from "@/hooks/spotify";
 
 const NowPlayingCard = () => {
   const { data: accessToken } = useSpotifyAccessToken();
   const { data: nowPlayingData, isLoading: nowPlayingLoading } = useNowPlaying(
-    accessToken?.access_token!
+    accessToken?.access_token || ""
   );
   const { data: userData, isLoading: userLoading } = useUserProfile(
-    accessToken?.access_token!
+    accessToken?.access_token || ""
   );
   const isNotPlaying = !nowPlayingData;
   const isPaused = nowPlayingData?.is_playing === false;
@@ -72,8 +72,8 @@ const NowPlayingCard = () => {
             {isNotPlaying
               ? "User is offline"
               : isPaused
-              ? "Music is paused"
-              : "Listening to music"}
+                ? "Music is paused"
+                : "Listening to music"}
           </motion.p>
         </motion.div>
         <motion.div
@@ -83,7 +83,7 @@ const NowPlayingCard = () => {
           className="overflow-hidden w-14 h-14 shrink-0"
         >
           <img
-            src={userData?.images.slice(-1)[0].url!}
+            src={userData?.images.slice(-1)[0].url || ""}
             alt="Profile Picture"
             className="rounded-full w-full h-full object-cover"
           />
@@ -105,7 +105,7 @@ const NowPlayingCard = () => {
             className="overflow-hidden w-24 h-24 shrink-0"
           >
             <img
-              src={nowPlayingData?.item?.album.images.slice(-1)[0].url!}
+              src={nowPlayingData?.item?.album.images.slice(-1)[0].url || ""}
               alt="Artist Picture"
               width={nowPlayingData?.item?.album.images.slice(-1)[0].width}
               height={nowPlayingData?.item?.album.images.slice(-1)[0].height}

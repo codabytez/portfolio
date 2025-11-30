@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { NextPage } from "next";
 import React from "react";
 import Button from "../UI/button";
@@ -14,11 +13,6 @@ import nextjs from "@/public/nextjs-tech.svg";
 import { motion } from "framer-motion";
 import ProjectSkeleton from "./project-skeleton";
 
-interface ProjectCardProps extends ContentfulResponse {
-  index: number;
-  isLoading: boolean;
-}
-
 const techColors = [
   { name: "React", color: "#86E1F9" },
   { name: "HTML", color: "#FFA67E" },
@@ -31,7 +25,7 @@ const techColors = [
   { name: "NextJS", color: "#000000" },
 ];
 
-const ProjectCard: NextPage<ProjectCardProps> = ({
+const ProjectCard: NextPage<IProjectCardProps> = ({
   fields: { title, tags, description, project_img, link },
   index,
   isLoading,
@@ -44,20 +38,20 @@ const ProjectCard: NextPage<ProjectCardProps> = ({
     tags[0].toLowerCase() === "react"
       ? react
       : tags[0].toLowerCase() === "html"
-      ? html
-      : tags[0].toLowerCase() === "css"
-      ? css
-      : tags[0].toLowerCase() === "vue"
-      ? vue
-      : tags[0].toLowerCase() === "angular"
-      ? angular
-      : tags[0].toLowerCase() === "gatsby"
-      ? gatsby
-      : tags[0].toLowerCase() === "flutter"
-      ? flutter
-      : tags[0].toLowerCase() === "next.js" || "nextjs"
-      ? nextjs
-      : "";
+        ? html
+        : tags[0].toLowerCase() === "css"
+          ? css
+          : tags[0].toLowerCase() === "vue"
+            ? vue
+            : tags[0].toLowerCase() === "angular"
+              ? angular
+              : tags[0].toLowerCase() === "gatsby"
+                ? gatsby
+                : tags[0].toLowerCase() === "flutter"
+                  ? flutter
+                  : tags[0].toLowerCase() === "next.js" || "nextjs"
+                    ? nextjs
+                    : "";
 
   return (
     <>

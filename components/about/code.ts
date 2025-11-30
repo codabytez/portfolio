@@ -173,8 +173,8 @@ export const movies = `/**
 */`;
 
 export const music = (
-  topTracks: SpotifyTopTracksResponse,
-  topArtists: SpotifyTopArtistsResponse
+  topTracks: ISpotifyTopTracksResponse,
+  topArtists: ISpotifyTopArtistsResponse
 ) => {
   return `/**
 * music:

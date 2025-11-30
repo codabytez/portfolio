@@ -7,7 +7,7 @@ import externalLink from "@/public/external-link.svg";
 import mail from "@/public/mail.svg";
 import Link from "next/link";
 import { SOCIALS } from "@/constants";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const links = [
   { href: SOCIALS.INSTAGRAM, text: "instagram-account" },
@@ -15,7 +15,7 @@ const links = [
   { href: SOCIALS.WAKATIME, text: "wakatime-profile" },
 ];
 
-const sidebarVariants = {
+const sidebarVariants: Variants = {
   initial: { x: -100, opacity: 0 },
   animate: {
     x: 0,
@@ -29,7 +29,7 @@ const sidebarVariants = {
   },
 };
 
-const contentVariants = {
+const contentVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
@@ -43,7 +43,7 @@ const contentVariants = {
   },
 };
 
-const contactMeVariants = {
+const contactMeVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
@@ -61,7 +61,7 @@ const contactMeVariants = {
   },
 };
 
-const listItemVariants = {
+const listItemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,

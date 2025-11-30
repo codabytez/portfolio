@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
   getAccessToken,
   getNowPlaying,
@@ -9,7 +8,7 @@ import {
 } from "@/api/spotify";
 
 export const useSpotifyAccessToken = () =>
-  useQuery<SpotifyAccessTokenResponse>({
+  useQuery<ISpotifyAccessTokenResponse>({
     queryKey: ["spotify", "access-token"],
     queryFn: () => getAccessToken(),
     placeholderData: keepPreviousData,
@@ -18,7 +17,7 @@ export const useSpotifyAccessToken = () =>
   });
 
 export const useNowPlaying = (accessToken: string) => {
-  return useQuery<SpotifyNowPlayingResponse>({
+  return useQuery<ISpotifyNowPlayingResponse>({
     queryKey: ["spotify", "now-playing"],
     queryFn: () => getNowPlaying(accessToken),
     enabled: !!accessToken,
@@ -29,7 +28,7 @@ export const useNowPlaying = (accessToken: string) => {
 };
 
 export const useUserProfile = (accessToken: string) => {
-  return useQuery<SpotifyUserResponse>({
+  return useQuery<ISpotifyUserResponse>({
     queryKey: ["spotify", "user-profile"],
     queryFn: () => getUserProfile(accessToken),
     enabled: !!accessToken,
@@ -40,7 +39,7 @@ export const useUserProfile = (accessToken: string) => {
 };
 
 export const useTopArtists = (accessToken: string) => {
-  return useQuery<SpotifyTopArtistsResponse>({
+  return useQuery<ISpotifyTopArtistsResponse>({
     queryKey: ["spotify", "top-artists"],
     queryFn: () => getTopArtists(accessToken),
     enabled: !!accessToken,
@@ -51,7 +50,7 @@ export const useTopArtists = (accessToken: string) => {
 };
 
 export const useTopTracks = (accessToken: string) => {
-  return useQuery<SpotifyTopTracksResponse>({
+  return useQuery<ISpotifyTopTracksResponse>({
     queryKey: ["spotify", "top-tracks"],
     queryFn: () => getTopTracks(accessToken),
     enabled: !!accessToken,

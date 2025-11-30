@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 "use client";
 import { NextPage } from "next";
 import { useState } from "react";

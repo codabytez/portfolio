@@ -9,7 +9,7 @@ import vue from "@/public/vue.svg";
 import flutter from "@/public/flutter.svg";
 import tailwind from "@/public/tailwind.svg";
 import nextjs from "@/public/nextjs.svg";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 import { DropdownArrowFill } from "../dropdown-arrow";
 
@@ -28,7 +28,7 @@ const projectTypes = [
   { key: "tailwind", name: "Tailwind", icon: tailwind },
 ];
 
-const listItemVariants = {
+const listItemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,

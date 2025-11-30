@@ -3,18 +3,7 @@ import { Input, TextArea } from "../UI/input";
 import Button from "../UI/button";
 import { motion } from "framer-motion";
 
-interface ContactFormProps {
-  isLoading: boolean;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  form: { name: string; email: string; message: string };
-  handleChange: (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-}
-
-const ContactForm: NextPage<ContactFormProps> = ({
+const ContactForm: NextPage<IContactFormProps> = ({
   isLoading,
   onSubmit,
   form,
