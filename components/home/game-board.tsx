@@ -43,7 +43,7 @@ const GameBoard: NextPage = () => {
 
   useEffect(() => {
     if (gameMode === "endless" && score > highestScore) {
-      setHighestScore(score);
+      queueMicrotask(() => setHighestScore(score));
     }
   }, [score, gameMode, highestScore]);
 
@@ -147,9 +147,9 @@ const GameBoard: NextPage = () => {
       <div className="flex flex-col gap-5">
         <div className="w-[182px] h-[142px] rounded-lg bg-[#01142330] p-3.5 flex flex-col gap-3.5">
           <p className="font-medium text-code-snippet">
-            {"// use keyboard"}
+            &#47;&#47; use keyboard
             <br />
-            {"// arrows to play"}
+            &#47;&#47; arrows to play
           </p>
           <div className="flex flex-col items-center gap-1">
             <button

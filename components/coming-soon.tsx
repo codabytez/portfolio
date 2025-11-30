@@ -107,7 +107,7 @@ const ComingSoon: NextPage = () => (
       transition={{ duration: 0.7, delay: 0.6, ease: "easeInOut" }}
       className="text-secondary-100 lg:text-body text-center max-w-lg px-4"
     >
-      {"We're"} crafting a mind-blowing experience for you. Stay tuned for
+      We&apos;re crafting a mind-blowing experience for you. Stay tuned for
       updates and get ready to be amazed!
     </motion.div>
   </motion.div>

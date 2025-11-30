@@ -1,18 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-interface ISnakeGameOptions {
-  snakeSize?: number;
-  foodSize?: number;
-  snakeSpeed?: number;
-  winScore?: number;
-  gameMode?: "standard" | "endless";
-}
-
-interface ISnake {
-  x: number;
-  y: number;
-}
-
 const defaultOptions: ISnakeGameOptions = {
   snakeSize: 10,
   foodSize: 10,
@@ -22,7 +9,7 @@ const defaultOptions: ISnakeGameOptions = {
 };
 
 export const useSnakeGameController = (options: ISnakeGameOptions) => {
-  options = { ...defaultOptions, ...options };
+  const mergedOptions = { ...defaultOptions, ...options };
 
   const initialSnake: ISnake[] = [
     { x: 80, y: 80 },
@@ -98,18 +85,18 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
           switch (direction) {
             case "up":
               ctx.arc(
-                s.x + options.snakeSize! / 2,
+                s.x + mergedOptions.snakeSize! / 2,
                 s.y,
-                options.snakeSize! / 2,
+                mergedOptions.snakeSize! / 2,
                 Math.PI,
                 0
               );
               break;
             case "down":
               ctx.arc(
-                s.x + options.snakeSize! / 2,
-                s.y + options.snakeSize!,
-                options.snakeSize! / 2,
+                s.x + mergedOptions.snakeSize! / 2,
+                s.y + mergedOptions.snakeSize!,
+                mergedOptions.snakeSize! / 2,
                 0,
                 Math.PI
               );
@@ -117,17 +104,17 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
             case "left":
               ctx.arc(
                 s.x,
-                s.y + options.snakeSize! / 2,
-                options.snakeSize! / 2,
+                s.y + mergedOptions.snakeSize! / 2,
+                mergedOptions.snakeSize! / 2,
                 Math.PI / 2,
                 Math.PI * 1.5
               );
               break;
             case "right":
               ctx.arc(
-                s.x + options.snakeSize!,
-                s.y + options.snakeSize! / 2,
-                options.snakeSize! / 2,
+                s.x + mergedOptions.snakeSize!,
+                s.y + mergedOptions.snakeSize! / 2,
+                mergedOptions.snakeSize! / 2,
                 Math.PI * 1.5,
                 Math.PI / 2
               );
@@ -135,16 +122,21 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
           }
           ctx.fill();
         }
-        ctx.fillRect(s.x, s.y, options.snakeSize!, options.snakeSize!);
+        ctx.fillRect(
+          s.x,
+          s.y,
+          mergedOptions.snakeSize!,
+          mergedOptions.snakeSize!
+        );
       });
     };
 
     const drawFood = () => {
       ctx.beginPath();
       ctx.arc(
-        food.x + options.foodSize! / 2,
-        food.y + options.foodSize! / 2,
-        options.foodSize! + 2,
+        food.x + mergedOptions.foodSize! / 2,
+        food.y + mergedOptions.foodSize! / 2,
+        mergedOptions.foodSize! + 2,
         0,
         2 * Math.PI
       );
@@ -153,9 +145,9 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
       ctx.fill();
       ctx.beginPath();
       ctx.arc(
-        food.x + options.foodSize! / 2,
-        food.y + options.foodSize! / 2,
-        options.foodSize! / 1.2,
+        food.x + mergedOptions.foodSize! / 2,
+        food.y + mergedOptions.foodSize! / 2,
+        mergedOptions.foodSize! / 1.2,
         0,
         2 * Math.PI
       );
@@ -163,9 +155,9 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
       ctx.fill();
       ctx.beginPath();
       ctx.arc(
-        food.x + options.foodSize! / 2,
-        food.y + options.foodSize! / 2,
-        options.foodSize! / 2,
+        food.x + mergedOptions.foodSize! / 2,
+        food.y + mergedOptions.foodSize! / 2,
+        mergedOptions.foodSize! / 2,
         0,
         2 * Math.PI
       );
@@ -206,12 +198,12 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
         const newFood = {
           x:
             Math.floor(
-              Math.random() * (canvasSize.width / options.snakeSize!)
-            ) * options.snakeSize!,
+              Math.random() * (canvasSize.width / mergedOptions.snakeSize!)
+            ) * mergedOptions.snakeSize!,
           y:
             Math.floor(
-              Math.random() * (canvasSize.height / options.snakeSize!)
-            ) * options.snakeSize!,
+              Math.random() * (canvasSize.height / mergedOptions.snakeSize!)
+            ) * mergedOptions.snakeSize!,
         };
         // Ensure food does not overlap with snake
         if (snake.some((s) => s.x === newFood.x && s.y === newFood.y)) {
@@ -232,16 +224,16 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
 
       switch (direction) {
         case "up":
-          newHead.y -= options.snakeSize!;
+          newHead.y -= mergedOptions.snakeSize!;
           break;
         case "down":
-          newHead.y += options.snakeSize!;
+          newHead.y += mergedOptions.snakeSize!;
           break;
         case "left":
-          newHead.x -= options.snakeSize!;
+          newHead.x -= mergedOptions.snakeSize!;
           break;
         case "right":
-          newHead.x += options.snakeSize!;
+          newHead.x += mergedOptions.snakeSize!;
           break;
       }
 
@@ -260,15 +252,32 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
       if (!paused && !gameOver) {
         moveSnake();
       }
-      if (options.gameMode === "standard" && score === options.winScore) {
+      if (
+        mergedOptions.gameMode === "standard" &&
+        score === mergedOptions.winScore
+      ) {
         setGameOver(true);
       }
-    }, options.snakeSpeed!);
+    }, mergedOptions.snakeSpeed!);
 
     return () => {
       clearInterval(gameLoop);
     };
-  }, [snake, food, direction, gameOver, paused, score, canvasSize, options]);
+  }, [
+    snake,
+    food,
+    direction,
+    gameOver,
+    paused,
+    score,
+    canvasSize,
+    options,
+    mergedOptions.snakeSpeed,
+    mergedOptions.snakeSize,
+    mergedOptions.foodSize,
+    mergedOptions.gameMode,
+    mergedOptions.winScore,
+  ]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

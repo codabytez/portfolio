@@ -2,15 +2,7 @@ import { NextPage } from "next";
 import CodeBlock from "../code-block";
 import { motion } from "framer-motion";
 
-interface CodeStringProps {
-  form: {
-    name: string;
-    email: string;
-    message: string;
-  };
-}
-
-const CodeString: NextPage<CodeStringProps> = ({ form }) => {
+const CodeString: NextPage<ICodeStringProps> = ({ form }) => {
   const codeString = `const button = document.querySelector('#sendBtn');
 
     const message = {

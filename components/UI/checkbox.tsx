@@ -2,11 +2,7 @@
 import { NextPage } from "next";
 import { useState } from "react";
 
-interface CustomCheckboxProps {
-  onChange: () => void;
-}
-
-const CustomCheckbox: NextPage<CustomCheckboxProps> = ({ onChange }) => {
+const CustomCheckbox: NextPage<ICustomCheckboxProps> = ({ onChange }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {

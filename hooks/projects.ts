@@ -1,6 +1,5 @@
-/* eslint-disable camelcase */
 import { createClient } from "contentful";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const client = createClient({
   space: String(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID),
@@ -8,13 +7,13 @@ const client = createClient({
 });
 
 export const useProjects = () => {
-  return useQuery<any>({
+  return useQuery<IContentfulResponse[]>({
     queryKey: ["projects"],
     queryFn: async () => {
       const response = await client.getEntries({
         content_type: "projects",
       });
-      return response.items;
+      return response.items as unknown as IContentfulResponse[];
     },
     placeholderData: keepPreviousData,
   });

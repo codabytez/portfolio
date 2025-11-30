@@ -9,39 +9,32 @@ import CodeSnippet from "./code-snippet";
 import CodeBlock from "../code-block";
 import {
   bio,
-  interests,
   education,
   experience,
   hardSkills,
-  softSkills,
-  sports,
+  interests,
   movies,
   music,
+  softSkills,
+  sports,
 } from "./code";
 import { useStarredGists } from "@/hooks/gists";
 import { LoadingAnimation } from "../UI/loading";
 import { ErrorAnimation } from "../UI/error";
 import {
   useSpotifyAccessToken,
-  useTopTracks,
   useTopArtists,
+  useTopTracks,
 } from "@/hooks/spotify";
-
-interface Tab {
-  id: string;
-  label: string;
-  content: string;
-  category: string;
-}
 
 const About: NextPage = () => {
   const { data: token } = useSpotifyAccessToken();
-  const { data: topTracks } = useTopTracks(token?.access_token!);
-  const { data: topArtists } = useTopArtists(token?.access_token!);
+  const { data: topTracks } = useTopTracks(token?.access_token || "");
+  const { data: topArtists } = useTopArtists(token?.access_token || "");
   const { data, isSuccess, isLoading } = useStarredGists();
 
   const [activeTab, setActiveTab] = useState("personal-info");
-  const [openTabs, setOpenTabs] = useState<Tab[]>([
+  const [openTabs, setOpenTabs] = useState<ITab[]>([
     { id: "bio", label: "bio", content: "bio", category: "personal-info" },
   ]);
   const [currentTab, setCurrentTab] = useState("bio");
@@ -72,7 +65,7 @@ const About: NextPage = () => {
   const addTab = (tabId: string, category: string) => {
     const existingTab = openTabs.find((tab) => tab.id === tabId);
     if (!existingTab) {
-      const newTab: Tab = {
+      const newTab: ITab = {
         id: tabId,
         label: tabId,
         content: tabId,
@@ -95,7 +88,7 @@ const About: NextPage = () => {
         setActiveTab(newCurrentTab.category);
       } else {
         // If no tabs left, add default bio tab
-        const defaultTab: Tab = {
+        const defaultTab: ITab = {
           id: "bio",
           label: "bio",
           content: "bio",
@@ -224,7 +217,7 @@ const About: NextPage = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="xl:w-[52%] relative lg:p-5 flex xl:block flex-col items-center"
           >
-            <p className="self-stretch">{"// Code snippet showcase:"}</p>
+            <p className="self-stretch">&#47;&#47; Code snippet showcase:</p>
 
             <div
               className="xl:my-5 pt-5 sm:p-5 flex flex-col gap-6 xl:overflow-y-scroll h-[calc(100%+20px)] xl:h-[calc(100%-90px)] w-full"

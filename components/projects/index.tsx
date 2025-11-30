@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProjectSidebar from "./sidebar";
 import Image from "next/image";
 import close from "@/public/close.svg";
@@ -13,30 +13,18 @@ import { ErrorAnimation } from "../UI/error";
 const Projects = () => {
   const [selectedTech, setSelectedTech] = useState<string[]>([]);
   const { data, isLoading, isError } = useProjects();
-  const [filteredProjects, setFilteredProjects] = useState<
-    ContentfulResponse[]
-  >([]);
-
-  useEffect(() => {
-    if (data) {
-      if (selectedTech.length === 0) {
-        setFilteredProjects(data);
-      } else {
-        setFilteredProjects(
-          data.filter((project: ContentfulResponse) =>
-            project.fields.tags.some((tech) =>
-              selectedTech
-                .map((item) => normalizeTech(item))
-                .includes(normalizeTech(tech))
-            )
-          )
-        );
-      }
-    }
-  }, [selectedTech, data]);
 
   const normalizeTech = (name: string) =>
     name.toLowerCase().replace(/[\.\s\-]/g, "");
+
+  const filteredProjects: IContentfulResponse[] =
+    data?.filter((project: IContentfulResponse) =>
+      selectedTech.length === 0
+        ? true
+        : project.fields.tags.some((tech) =>
+            selectedTech.map(normalizeTech).includes(normalizeTech(tech))
+          )
+    ) ?? [];
 
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {

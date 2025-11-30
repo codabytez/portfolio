@@ -2,7 +2,7 @@
 import { NextPage } from "next";
 import Details from "./details";
 import GameBoard from "./game-board";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Home: NextPage = () => {
   return (

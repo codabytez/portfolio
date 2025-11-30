@@ -8,8 +8,8 @@ import DiscordSkeleton from "./discord-skeleton";
 const DiscordPresence: NextPage = () => {
   const { data, isLoading } = useDiscordPresence();
 
-  const activityToDisplay: Activity | undefined = data?.data?.activities.reduce(
-    (prev, curr) => {
+  const activityToDisplay: IActivity | undefined =
+    data?.data?.activities.reduce((prev, curr) => {
       if (curr.type === 4) {
         return prev;
       }
@@ -20,18 +20,16 @@ const DiscordPresence: NextPage = () => {
         return curr;
       }
       return prev;
-    },
-    {} as Activity
-  );
+    }, {} as IActivity);
 
   const statusColor =
     data?.data?.discord_status === "online"
       ? "#43B581"
       : data?.data?.discord_status === "idle"
-      ? "#FAA61A"
-      : data?.data?.discord_status === "dnd"
-      ? "#F04747"
-      : "#747F8D";
+        ? "#FAA61A"
+        : data?.data?.discord_status === "dnd"
+          ? "#F04747"
+          : "#747F8D";
 
   return (
     <>
@@ -93,13 +91,13 @@ const DiscordPresence: NextPage = () => {
                                 ""
                               )}`
                             : activityToDisplay?.assets.large_image.startsWith(
-                                "spotify:"
-                              )
-                            ? `https://i.scdn.co/image/${activityToDisplay?.assets.large_image.replace(
-                                "spotify:",
-                                ""
-                              )}`
-                            : `https://cdn.discordapp.com/app-assets/${activityToDisplay?.application_id}/${activityToDisplay?.assets.large_image}.webp`
+                                  "spotify:"
+                                )
+                              ? `https://i.scdn.co/image/${activityToDisplay?.assets.large_image.replace(
+                                  "spotify:",
+                                  ""
+                                )}`
+                              : `https://cdn.discordapp.com/app-assets/${activityToDisplay?.application_id}/${activityToDisplay?.assets.large_image}.webp`
                         }
                         width={56}
                         height={56}

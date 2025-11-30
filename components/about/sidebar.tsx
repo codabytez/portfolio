@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { NextPage } from "next";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import Image from "next/image";
 import terminal from "@/public/terminal.svg";
 import bubble from "@/public/bubble.svg";
@@ -15,82 +15,76 @@ import PersonalSidebar from "./personal/personal-sidebar";
 import ProfSidebar from "./professional/prof-sidebar";
 import HobbySidebar from "./hobby/hobby-sidebar";
 
-interface AboutSidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  setContentTab: (tab: string, category: string) => void;
-}
-
 const initialTabs = [
   { name: "professional-info", icon: terminal },
   { name: "personal-info", icon: bubble },
   { name: "hobbies", icon: console },
 ];
 
-const sidebarVariants = {
+const sidebarVariants: Variants = {
   initial: { x: -100, opacity: 0 },
   animate: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.5, ease: "easeInOut" },
+    transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] },
   },
   exit: {
     x: -100,
     opacity: 0,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   initial: { y: 20, opacity: 0 },
   animate: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.5, ease: "easeInOut" },
+    transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] },
   },
   exit: {
     y: -20,
     opacity: 0,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const contentVariants = {
+const contentVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeInOut" },
+    transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] },
   },
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const escapeRealityVariants = {
+const escapeRealityVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeInOut", delay: 1.5 },
+    transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1], delay: 1.5 },
   },
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const contactMeVariants = {
+const contactMeVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeInOut",
+      ease: [0.42, 0, 0.58, 1],
       delay: 2,
       staggerChildren: 0.2,
     },
@@ -98,25 +92,25 @@ const contactMeVariants = {
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const listItemVariants = {
+const listItemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeInOut" },
+    transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] },
   },
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3, ease: "easeInOut" },
+    transition: { duration: 0.3, ease: [0.42, 0, 0.58, 1] },
   },
 };
 
-const AboutSidebar: NextPage<AboutSidebarProps> = ({
+const AboutSidebar: NextPage<IAboutSidebarProps> = ({
   activeTab,
   setActiveTab,
   setContentTab,
@@ -166,8 +160,8 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
                     name === "professional-info"
                       ? "experience"
                       : name === "hobbies"
-                      ? "sports"
-                      : "bio"
+                        ? "sports"
+                        : "bio"
                   )
                 }
                 className={`${
@@ -247,7 +241,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
               setActiveTab("personal-info");
               setContentTab("bio", "personal-info");
             }}
-            key={"personal-info"}
+            key="personal-info"
           >
             <DropdownArrowFill isOpen={isOpen === "personal-info"} />
             <p className="text-secondary-400 font-light">personal-info</p>
@@ -280,7 +274,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
               setActiveTab("professional-info");
               setContentTab("experience", "professional-info");
             }}
-            key={"professional-info"}
+            key="professional-info"
           >
             <DropdownArrowFill isOpen={isOpen === "professional-info"} />
             <p className="text-secondary-400 font-light">professional-info</p>
@@ -313,7 +307,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
               setActiveTab("hobbies");
               setContentTab("sports", "hobbies");
             }}
-            key={"hobbies"}
+            key="hobbies"
           >
             <DropdownArrowFill isOpen={isOpen === "hobbies"} />
             <p className="text-secondary-400 font-light">hobbies</p>
@@ -341,7 +335,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
           <button
             className="h-10 flex gap-3 px-3 items-center border-y border-line w-full bg-line hover:opacity-60 lg:bg-transparent"
             onClick={() => toggleOpen("escapeReality")}
-            key={"escapeReality"}
+            key="escapeReality"
           >
             <DropdownArrowFill isOpen={isOpen === "escapeReality"} />
             <p className="text-secondary-400 font-light">escape-reality</p>
@@ -395,7 +389,7 @@ const AboutSidebar: NextPage<AboutSidebarProps> = ({
           <button
             className="h-10 flex gap-3 px-3 items-center border-b border-line w-full bg-line hover:opacity-60 lg:bg-transparent"
             onClick={() => toggleOpen("contacts")}
-            key={"contacts"}
+            key="contacts"
           >
             <DropdownArrowFill isOpen />
             <p className="text-secondary-400 font-light">contacts</p>

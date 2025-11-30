@@ -9,12 +9,12 @@ export const getGist = async (id: string) => {
   return (await gistInstance.get(GITHUB_GIST_ENDPOINTS.GET_GIST(id))).data;
 };
 
-export const createGist = async (data: GithubGistDataTypes) => {
+export const createGist = async (data: IGithubGistDataTypes) => {
   return (await gistInstance.post(GITHUB_GIST_ENDPOINTS.CREATE_GIST, data))
     .data;
 };
 
-export const updateGist = async (id: string, data: GithubGistDataTypes) => {
+export const updateGist = async (id: string, data: IGithubGistDataTypes) => {
   return (await gistInstance.patch(GITHUB_GIST_ENDPOINTS.UPDATE_GIST(id), data))
     .data;
 };

@@ -5,9 +5,9 @@ import orangeFolder from "@/public/orange-folder.svg";
 import greenFolder from "@/public/green-folder.svg";
 import blueFolder from "@/public/blue-folder.svg";
 import { DropdownArrow } from "@/components/dropdown-arrow";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const listItemVariants = {
+const listItemVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: {
     opacity: 1,
@@ -43,7 +43,7 @@ const ProfSidebar: NextPage<{
       <motion.button
         className="flex gap-3 items-center w-max group"
         onClick={() => toggleIsOpen("experience")}
-        key={"experience"}
+        key="experience"
         variants={listItemVariants}
       >
         <DropdownArrow isOpen={isOpen === "experience"} />
@@ -62,7 +62,7 @@ const ProfSidebar: NextPage<{
       <motion.button
         className="flex gap-3 items-center w-max group"
         onClick={() => toggleIsOpen("hard-skills")}
-        key={"hard-skills"}
+        key="hard-skills"
         variants={listItemVariants}
       >
         <DropdownArrow isOpen={isOpen === "hard-skills"} />
@@ -81,7 +81,7 @@ const ProfSidebar: NextPage<{
       <motion.button
         className="flex gap-3 items-center w-max group"
         onClick={() => toggleIsOpen("soft-skills")}
-        key={"soft-skills"}
+        key="soft-skills"
         variants={listItemVariants}
       >
         <DropdownArrow isOpen={isOpen === "soft-skills"} />

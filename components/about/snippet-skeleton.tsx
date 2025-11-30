@@ -1,7 +1,7 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
-const skeletonVariants = {
+const skeletonVariants: Variants = {
   initial: {
     opacity: 0,
     x: -50,
@@ -16,7 +16,7 @@ const skeletonVariants = {
   },
 };
 
-const contentVariants = {
+const contentVariants: Variants = {
   initial: {
     opacity: 0,
     y: 20,

@@ -1,22 +1,22 @@
 import {
+  keepPreviousData,
   useMutation,
   useQuery,
   useQueryClient,
-  keepPreviousData,
 } from "@tanstack/react-query";
 import {
+  createGist,
+  deleteGist,
   getGist,
   getGistsByUser,
   getMyGists,
   getPublicGists,
   getStarredGists,
-  createGist,
   updateGist,
-  deleteGist,
 } from "@/api/gist";
 
 export const useMyGists = () =>
-  useQuery<MyGistsResponse[]>({
+  useQuery<IMyGistsResponse[]>({
     queryKey: ["myGists"],
     queryFn: getMyGists,
     placeholderData: keepPreviousData,
@@ -37,7 +37,7 @@ export const usePublicGists = () =>
   });
 
 export const useStarredGists = () =>
-  useQuery<MyGistsResponse[]>({
+  useQuery<IMyGistsResponse[]>({
     queryKey: ["starredGists"],
     queryFn: getStarredGists,
     placeholderData: keepPreviousData,
@@ -55,11 +55,11 @@ export const useGist = (id: string) =>
 export const useCreateGist = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: GithubGistDataTypes) => createGist(data),
+    mutationFn: (data: IGithubGistDataTypes) => createGist(data),
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: ["gists"] });
       const previousGists = queryClient.getQueryData(["gists"]);
-      queryClient.setQueryData(["gists"], (old: GithubGistDataTypes[]) => [
+      queryClient.setQueryData(["gists"], (old: IGithubGistDataTypes[]) => [
         ...old,
         data,
       ]);
@@ -77,13 +77,13 @@ export const useCreateGist = () => {
 export const useUpdateGist = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: GithubGistDataTypes) => updateGist(data.id!, data),
+    mutationFn: (data: IGithubGistDataTypes) => updateGist(data.id!, data),
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: ["gists"] });
       const previousGists = queryClient.getQueryData(["gists"]);
-      queryClient.setQueryData(["gists"], (old: GithubGistDataTypes[]) => {
+      queryClient.setQueryData(["gists"], (old: IGithubGistDataTypes[]) => {
         const index = old.findIndex(
-          (gist: GithubGistDataTypes) => gist.id === data.id
+          (gist: IGithubGistDataTypes) => gist.id === data.id
         );
         old[index] = data;
         return old;
@@ -106,8 +106,8 @@ export const useDeleteGist = () => {
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: ["gists"] });
       const previousGists = queryClient.getQueryData(["gists"]);
-      queryClient.setQueryData(["gists"], (old: GithubGistDataTypes[]) =>
-        old.filter((gist: GithubGistDataTypes) => gist.id !== id)
+      queryClient.setQueryData(["gists"], (old: IGithubGistDataTypes[]) =>
+        old.filter((gist: IGithubGistDataTypes) => gist.id !== id)
       );
       return { previousGists };
     },

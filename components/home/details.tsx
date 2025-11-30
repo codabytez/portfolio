@@ -65,7 +65,7 @@ const Details: NextPage = () => {
           transition={{ duration: 0.3, ease: "easeOut", delay: 1 }}
           className="hidden lg:block"
         >
-          {"// complete the game to continue"}
+          &#47;&#47; complete the game to continue
         </motion.p>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
@@ -73,7 +73,7 @@ const Details: NextPage = () => {
           transition={{ duration: 0.3, ease: "easeOut", delay: 1.2 }}
           className="text-code-snippet lg:text-base"
         >
-          {"// find my profile on Github:"}
+          &#47;&#47; find my profile on Github:
         </motion.p>
         <motion.p
           initial={{ opacity: 0, x: -20 }}
