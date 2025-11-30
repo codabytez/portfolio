@@ -5,9 +5,7 @@ const AdminPage = () => {
     <div>
       <h1>Admin Page</h1>
       <p>This is the admin page.</p>
-      <button onClick={() => console.log("Admin Page Button Clicked")}>
-        Click Me
-      </button>
+      <button>Click Me</button>
     </div>
   );
 };
