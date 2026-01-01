@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/*"
+  to = "https://obinnachidi.com/:splat"
+  status = 301
+  force = true
