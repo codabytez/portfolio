@@ -38,13 +38,15 @@ const Projects = () => {
     name.toLowerCase().replace(/[\.\s\-]/g, "");
 
   const filteredProjects =
-    projects?.filter((project) =>
-      selectedTech.length === 0
+    projects?.filter((project) => {
+      if (!project.featured) return false;
+
+      return selectedTech.length === 0
         ? true
         : project.tags.some((tech) =>
             selectedTech.map(normalizeTech).includes(normalizeTech(tech)),
-          ),
-    ) ?? [];
+          );
+    }) ?? [];
 
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {
