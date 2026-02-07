@@ -44,10 +44,7 @@ const Projects = () => {
         : project.tags.some((tech) =>
             selectedTech.map(normalizeTech).includes(normalizeTech(tech)),
           ),
-    ) ??
-    // Projects are already sorted by order from the query
-    // No need to sort again unless you want a different order for filtered results
-    [];
+    ) ?? [];
 
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {
