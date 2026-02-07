@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 import Button from "../UI/button";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import react from "@/public/react-tech.svg";
 import html from "@/public/html-tech.svg";
 import css from "@/public/css-tech.svg";
@@ -12,46 +12,55 @@ import flutter from "@/public/flutter-tech.svg";
 import nextjs from "@/public/nextjs-tech.svg";
 import { motion } from "framer-motion";
 import ProjectSkeleton from "./project-skeleton";
+import { Doc } from "@/convex/_generated/dataModel";
 
-const techColors = [
-  { name: "React", color: "#86E1F9" },
-  { name: "HTML", color: "#FFA67E" },
-  { name: "CSS", color: "#95D6F0" },
-  { name: "Vue", color: "#81D4AF" },
-  { name: "Angular", color: "#F2A9B9" },
-  { name: "Gatsby", color: "#B7A1CE" },
-  { name: "Flutter", color: "#A0BDE1" },
-  { name: "Next.js", color: "#000000" },
-  { name: "NextJS", color: "#000000" },
-];
-
-const ProjectCard: NextPage<IProjectCardProps> = ({
-  fields: { title, tags, description, project_img, link },
+const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
+  title,
+  tags,
+  description,
+  image,
+  link,
   index,
   isLoading,
 }) => {
-  const tagBgColor = techColors.find(
-    (tech) => tech.name.toLowerCase() === tags[0].toLowerCase()
-  )?.color;
+  const techIconMap: Record<string, StaticImageData | string> = {
+    react,
+    html,
+    css,
+    vue,
+    angular,
+    gatsby,
+    flutter,
+    "next.js": nextjs,
+    nextjs,
+  };
 
-  const tagIcon =
-    tags[0].toLowerCase() === "react"
-      ? react
-      : tags[0].toLowerCase() === "html"
-        ? html
-        : tags[0].toLowerCase() === "css"
-          ? css
-          : tags[0].toLowerCase() === "vue"
-            ? vue
-            : tags[0].toLowerCase() === "angular"
-              ? angular
-              : tags[0].toLowerCase() === "gatsby"
-                ? gatsby
-                : tags[0].toLowerCase() === "flutter"
-                  ? flutter
-                  : tags[0].toLowerCase() === "next.js" || "nextjs"
-                    ? nextjs
-                    : "";
+  const normalizedTag = tags[0]?.toLowerCase();
+
+  const tagIcon: StaticImageData | string | undefined = normalizedTag
+    ? techIconMap[normalizedTag]
+    : undefined;
+
+  const techColorsMap: Record<string, string> = {
+    react: "#86E1F9",
+    html: "#FFA67E",
+    css: "#95D6F0",
+    vue: "#81D4AF",
+    angular: "#F2A9B9",
+    gatsby: "#B7A1CE",
+    flutter: "#A0BDE1",
+    "next.js": "#000000",
+    nextjs: "#000000",
+  };
+
+  const tagBgColor = normalizedTag ? techColorsMap[normalizedTag] : undefined;
+
+  // Fallback color - use tag color or default blue
+  const fallbackBgColor = tagBgColor ? tagBgColor.replace("#", "") : "5565E8";
+
+  // Fallback image in case screenshot fails
+  const fallbackImage = `https://placehold.co/370x315/${fallbackBgColor}/FFFFFF?text=${encodeURIComponent(title)}`;
+  const displayImage = image || fallbackImage;
 
   return (
     <>
@@ -74,36 +83,34 @@ const ProjectCard: NextPage<IProjectCardProps> = ({
             <span className="text-secondary-100"> {`// _${title}`} </span>
           </motion.p>
           <motion.div
-            className="w-full max-w-[370px] min-h-[315px] rounded-2xl border border-line bg-primary-300 overflow-hidden shadow-sm cursor-grab active:cursor-grabbing"
+            className="w-full max-w-[370px] min-h-[315px] rounded-2xl border border-line bg-primary-300 overflow-hidden shadow-sm cursor-grab active:cursor-grabbing flex flex-col"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            // whileDrag={{ scale: 1.1, rotate: 5, zIndex: 100 }}
-            // drag
-            // dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           >
-            <div className="w-full h-36 relative overflow-hidden">
+            <div className="w-full h-36 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
               <motion.div
-                className="w-7 h-7 rounded-sm flex justify-center items-center absolute top-5 right-4 shadow-md"
+                className="w-7 h-7 rounded-sm flex justify-center items-center absolute top-5 right-4 shadow-md z-10"
                 style={{ backgroundColor: tagBgColor }}
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
               >
-                <Image src={tagIcon} alt={tags[0]} />
+                {tagIcon && <Image src={tagIcon} alt={tags[0]} />}
               </motion.div>
               <Image
                 draggable={false}
-                src={"https:" + project_img.fields.file.url}
+                src={displayImage}
                 width={370}
                 height={315}
-                alt={project_img.fields.title}
+                alt={title}
                 className="w-full h-full object-cover"
+                unoptimized={!image}
               />
             </div>
-            <div className="flex flex-col gap-5 p-5">
+            <div className="flex flex-col gap-5 p-5 flex-1 justify-between">
               <motion.p
                 className="max-w-[304px] text-body font-medium"
                 initial={{ opacity: 0, y: 20 }}

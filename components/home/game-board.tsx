@@ -23,7 +23,7 @@ const GameBoard: NextPage = () => {
   const { push } = useRouter();
   const [gameMode, setGameMode] = useState<"standard" | "endless">("standard");
   const [highestScore, setHighestScore] = useState<number>(
-    window !== undefined ? Number(window.localStorage.getItem("highScore")) : 0
+    window !== undefined ? Number(window.localStorage.getItem("highScore")) : 0,
   );
   const winScore = gameMode === "standard" ? 10 : undefined;
   const {

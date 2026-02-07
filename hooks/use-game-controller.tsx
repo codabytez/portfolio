@@ -41,7 +41,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [snake, setSnake] = useState<ISnake[]>(initialSnake);
   const [direction, setDirection] = useState<"up" | "down" | "left" | "right">(
-    "up"
+    "up",
   );
   const [food, setFood] = useState<ISnake>({ x: 80, y: 50 });
   const [gameOver, setGameOver] = useState<boolean>(false);
@@ -89,7 +89,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
                 s.y,
                 mergedOptions.snakeSize! / 2,
                 Math.PI,
-                0
+                0,
               );
               break;
             case "down":
@@ -98,7 +98,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
                 s.y + mergedOptions.snakeSize!,
                 mergedOptions.snakeSize! / 2,
                 0,
-                Math.PI
+                Math.PI,
               );
               break;
             case "left":
@@ -107,7 +107,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
                 s.y + mergedOptions.snakeSize! / 2,
                 mergedOptions.snakeSize! / 2,
                 Math.PI / 2,
-                Math.PI * 1.5
+                Math.PI * 1.5,
               );
               break;
             case "right":
@@ -116,7 +116,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
                 s.y + mergedOptions.snakeSize! / 2,
                 mergedOptions.snakeSize! / 2,
                 Math.PI * 1.5,
-                Math.PI / 2
+                Math.PI / 2,
               );
               break;
           }
@@ -126,7 +126,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
           s.x,
           s.y,
           mergedOptions.snakeSize!,
-          mergedOptions.snakeSize!
+          mergedOptions.snakeSize!,
         );
       });
     };
@@ -138,7 +138,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
         food.y + mergedOptions.foodSize! / 2,
         mergedOptions.foodSize! + 2,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.fillStyle = "#43D9AD";
       ctx.globalAlpha = 0.1;
@@ -149,7 +149,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
         food.y + mergedOptions.foodSize! / 2,
         mergedOptions.foodSize! / 1.2,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.globalAlpha = 0.2;
       ctx.fill();
@@ -159,7 +159,7 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
         food.y + mergedOptions.foodSize! / 2,
         mergedOptions.foodSize! / 2,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.globalAlpha = 1;
       ctx.fill();
@@ -198,11 +198,11 @@ export const useSnakeGameController = (options: ISnakeGameOptions) => {
         const newFood = {
           x:
             Math.floor(
-              Math.random() * (canvasSize.width / mergedOptions.snakeSize!)
+              Math.random() * (canvasSize.width / mergedOptions.snakeSize!),
             ) * mergedOptions.snakeSize!,
           y:
             Math.floor(
-              Math.random() * (canvasSize.height / mergedOptions.snakeSize!)
+              Math.random() * (canvasSize.height / mergedOptions.snakeSize!),
             ) * mergedOptions.snakeSize!,
         };
         // Ensure food does not overlap with snake

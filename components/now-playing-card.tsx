@@ -10,10 +10,10 @@ import {
 const NowPlayingCard = () => {
   const { data: accessToken } = useSpotifyAccessToken();
   const { data: nowPlayingData, isLoading: nowPlayingLoading } = useNowPlaying(
-    accessToken?.access_token || ""
+    accessToken?.access_token || "",
   );
   const { data: userData, isLoading: userLoading } = useUserProfile(
-    accessToken?.access_token || ""
+    accessToken?.access_token || "",
   );
   const isNotPlaying = !nowPlayingData;
   const isPaused = nowPlayingData?.is_playing === false;

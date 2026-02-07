@@ -22,7 +22,7 @@ const Contact: NextPage = () => {
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -41,7 +41,7 @@ const Contact: NextPage = () => {
             message: form.message,
             to_name: "Obinna Chidi",
           },
-          String(process.env.NEXT_PUBLIC_EMAILJS_USER_ID)
+          String(process.env.NEXT_PUBLIC_EMAILJS_USER_ID),
         )
         .then(() => {
           setIsLoading(false);

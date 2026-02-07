@@ -6,32 +6,58 @@ import close from "@/public/close.svg";
 import ProjectCard from "./project-card";
 import { motion } from "framer-motion";
 import ProjectEmptyState from "./project-empty-state";
-import { useProjects } from "@/hooks/projects";
 import { LoadingAnimation } from "../UI/loading";
 import { ErrorAnimation } from "../UI/error";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const Projects = () => {
+  const projects = useQuery(api.queries.getProjects);
+  const isLoading = projects === undefined;
+  const isError = projects === null;
+
   const [selectedTech, setSelectedTech] = useState<string[]>([]);
-  const { data, isLoading, isError } = useProjects();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <LoadingAnimation />;
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <ErrorAnimation />
+      </div>
+    );
+  }
 
   const normalizeTech = (name: string) =>
     name.toLowerCase().replace(/[\.\s\-]/g, "");
 
-  const filteredProjects: IContentfulResponse[] =
-    data?.filter((project: IContentfulResponse) =>
-      selectedTech.length === 0
-        ? true
-        : project.fields.tags.some((tech) =>
-            selectedTech.map(normalizeTech).includes(normalizeTech(tech))
-          )
-    ) ?? [];
+  const filteredProjects =
+    projects
+      ?.filter((project) =>
+        selectedTech.length === 0
+          ? true
+          : project.tags.some((tech) =>
+              selectedTech.map(normalizeTech).includes(normalizeTech(tech)),
+            ),
+      )
+      .sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA;
+      }) ?? [];
 
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {
       setSelectedTech(
         selectedTech.filter(
-          (item) => normalizeTech(item) !== normalizeTech(name)
-        )
+          (item) => normalizeTech(item) !== normalizeTech(name),
+        ),
       );
     } else {
       setSelectedTech([...selectedTech, normalizeTech(name)]);
@@ -64,11 +90,7 @@ const Projects = () => {
         </div>
 
         <div className="lg:border-t lg:border-line p-10 2xl:p-20 relative overflow-hidden h-full">
-          {isLoading ? (
-            <LoadingAnimation />
-          ) : isError ? (
-            <ErrorAnimation />
-          ) : filteredProjects.length === 0 ? (
+          {filteredProjects.length === 0 ? (
             <ProjectEmptyState />
           ) : (
             <motion.div
@@ -92,7 +114,7 @@ const Projects = () => {
                   transition={{ duration: 0.5, delay: i * 0.5 }}
                 >
                   <ProjectCard
-                    key={project.sys.id}
+                    key={project._id}
                     {...project}
                     index={i}
                     isLoading={isLoading}

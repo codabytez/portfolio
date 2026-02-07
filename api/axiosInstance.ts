@@ -3,8 +3,8 @@ import axios from "axios";
 const ACCESS_TOKEN = String(process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN);
 const BASIC = Buffer.from(
   `${String(process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID)}:${String(
-    process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
-  )}`
+    process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET,
+  )}`,
 ).toString("base64");
 
 export const gistInstance = axios.create({
