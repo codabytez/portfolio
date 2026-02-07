@@ -3,7 +3,11 @@ import { mutation, query } from "./_generated/server";
 
 export const list = query({
   async handler(ctx) {
-    return ctx.db.query("projects").order("asc").collect();
+    return ctx.db
+      .query("projects")
+      .order("asc")
+      .collect()
+      .then((projects) => projects.sort((a, b) => a.order - b.order));
   },
 });
 
@@ -55,6 +59,25 @@ export const update = mutation({
       updatedAt: Date.now(),
     });
     return ctx.db.get(id);
+  },
+});
+
+export const reorder = mutation({
+  args: {
+    projects: v.array(
+      v.object({
+        id: v.id("projects"),
+        order: v.number(),
+      }),
+    ),
+  },
+  async handler(ctx, args) {
+    // Update all projects with their new order
+    await Promise.all(
+      args.projects.map(({ id, order }) =>
+        ctx.db.patch(id, { order, updatedAt: Date.now() }),
+      ),
+    );
   },
 });
 

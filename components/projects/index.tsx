@@ -12,7 +12,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 const Projects = () => {
-  const projects = useQuery(api.queries.getProjects);
+  const projects = useQuery(api.projects.list); // Changed from api.queries.getProjects
   const isLoading = projects === undefined;
   const isError = projects === null;
 
@@ -38,19 +38,16 @@ const Projects = () => {
     name.toLowerCase().replace(/[\.\s\-]/g, "");
 
   const filteredProjects =
-    projects
-      ?.filter((project) =>
-        selectedTech.length === 0
-          ? true
-          : project.tags.some((tech) =>
-              selectedTech.map(normalizeTech).includes(normalizeTech(tech)),
-            ),
-      )
-      .sort((a, b) => {
-        const dateA = new Date(a.createdAt).getTime();
-        const dateB = new Date(b.createdAt).getTime();
-        return dateB - dateA;
-      }) ?? [];
+    projects?.filter((project) =>
+      selectedTech.length === 0
+        ? true
+        : project.tags.some((tech) =>
+            selectedTech.map(normalizeTech).includes(normalizeTech(tech)),
+          ),
+    ) ??
+    // Projects are already sorted by order from the query
+    // No need to sort again unless you want a different order for filtered results
+    [];
 
   const handleSelect = (name: string) => {
     if (selectedTech.includes(name)) {
