@@ -9,6 +9,7 @@ import vue from "@/public/vue-tech.svg";
 import angular from "@/public/angular-tech.svg";
 import gatsby from "@/public/gatsby-tech.svg";
 import flutter from "@/public/flutter-tech.svg";
+import tailwind from "@/public/tailwind.svg";
 import nextjs from "@/public/nextjs-tech.svg";
 import { motion } from "framer-motion";
 import ProjectSkeleton from "./project-skeleton";
@@ -33,6 +34,8 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
     flutter,
     "next.js": nextjs,
     nextjs,
+    tailwind,
+    tailwindcss: tailwind,
   };
 
   const normalizedTag = tags[0]?.toLowerCase();
@@ -51,6 +54,8 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
     flutter: "#A0BDE1",
     "next.js": "#000000",
     nextjs: "#000000",
+    tailwind: "#38BDF8",
+    tailwindcss: "#38BDF8",
   };
 
   const tagBgColor = normalizedTag ? techColorsMap[normalizedTag] : undefined;
@@ -87,10 +92,10 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-full h-36 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+            <div className="w-full h-40 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
               <motion.div
                 className="w-7 h-7 rounded-sm flex justify-center items-center absolute top-5 right-4 shadow-md z-10"
                 style={{ backgroundColor: tagBgColor }}
@@ -104,7 +109,7 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
                 draggable={false}
                 src={displayImage}
                 width={370}
-                height={315}
+                height={150}
                 alt={title}
                 className="w-full h-full object-cover"
                 unoptimized={!image}
@@ -112,7 +117,7 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
             </div>
             <div className="flex flex-col gap-5 p-5 flex-1 justify-between">
               <motion.p
-                className="max-w-[304px] text-body font-medium"
+                className="max-w-[304px] font-medium"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8, ease: "easeOut" }}
@@ -124,7 +129,12 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 1, ease: "easeOut" }}
               >
-                <Button href={link} variant="secondary" className="w-max">
+                <Button
+                  target="_blank"
+                  href={link}
+                  variant="secondary"
+                  className="w-max"
+                >
                   view-project
                 </Button>
               </motion.div>
