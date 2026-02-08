@@ -88,14 +88,14 @@ const ProjectCard: NextPage<IProjectCardProps & Doc<"projects">> = ({
             <span className="text-secondary-100"> {`// _${title}`} </span>
           </motion.p>
           <motion.div
-            className="w-full max-w-[370px] min-h-[315px] rounded-2xl border border-line bg-primary-300 overflow-hidden shadow-sm cursor-grab active:cursor-grabbing flex flex-col"
+            className="w-full max-w-[370px] min-h-[315px] rounded-2xl border border-line bg-primary-300 overflow-hidden shadow-sm cursor-grab active:cursor-grabbing flex flex-col h-full"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-full h-40 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+            <div className="w-full h-44 relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
               <motion.div
                 className="w-7 h-7 rounded-sm flex justify-center items-center absolute top-5 right-4 shadow-md z-10"
                 style={{ backgroundColor: tagBgColor }}
