@@ -213,11 +213,11 @@ interface IContactFormProps {
   handleChange: (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => void;
 }
 
-interface IProjectCardProps extends IContentfulResponse {
+interface IProjectCardProps {
   index: number;
   isLoading: boolean;
 }

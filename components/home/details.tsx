@@ -5,7 +5,19 @@ import TypingAnimation from "./typing-animation";
 import DiscordPresence from "../discord-presence";
 import Button from "../UI/button";
 
-const Details: NextPage = () => {
+interface IDetailsProps {
+  name: string;
+  title: string;
+  githubLink: string;
+  resumeLink?: string;
+}
+
+const Details: NextPage<IDetailsProps> = ({
+  name,
+  title,
+  githubLink,
+  resumeLink,
+}) => {
   return (
     <div
       className="flex flex-col gap-10 sm:gap-14 h-full justify-center"
@@ -25,7 +37,7 @@ const Details: NextPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
         >
-          Obinna Chidi
+          <TypingAnimation text={name} />
         </motion.h1>
         <motion.h3
           className="text-secondary-300 text-xl sm:text-2xl lg:text-subheadline font-medium"
@@ -33,7 +45,7 @@ const Details: NextPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
         >
-          <TypingAnimation text="> Front-end developer" />
+          <TypingAnimation text={title} />
         </motion.h3>
 
         {/* CTA Button here */}
@@ -49,6 +61,14 @@ const Details: NextPage = () => {
             target="_blank"
           >
             Hire me
+          </Button>
+          <Button
+            variant="secondary"
+            href={resumeLink}
+            target="_blank"
+            className="ml-4"
+          >
+            View Resume
           </Button>
         </motion.div>
       </motion.div>
@@ -85,7 +105,7 @@ const Details: NextPage = () => {
           <span className="text-accent-200">githubLink</span>{" "}
           <span className="text-secondary-400">=</span>{" "}
           <span className="text-[#E99287]">
-            <TypingAnimation text='"https://github.com/codabytez"' />
+            <TypingAnimation text={`"${githubLink}"`} />
           </span>
         </motion.p>
       </motion.div>

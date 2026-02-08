@@ -84,18 +84,18 @@ const DiscordPresence: NextPage = () => {
                         alt="discord-activity"
                         src={
                           activityToDisplay?.assets.large_image.startsWith(
-                            "mp:external/"
+                            "mp:external/",
                           )
                             ? `https://media.discordapp.net/external/${activityToDisplay?.assets.large_image.replace(
                                 "mp:external/",
-                                ""
+                                "",
                               )}`
                             : activityToDisplay?.assets.large_image.startsWith(
-                                  "spotify:"
+                                  "spotify:",
                                 )
                               ? `https://i.scdn.co/image/${activityToDisplay?.assets.large_image.replace(
                                   "spotify:",
-                                  ""
+                                  "",
                                 )}`
                               : `https://cdn.discordapp.com/app-assets/${activityToDisplay?.application_id}/${activityToDisplay?.assets.large_image}.webp`
                         }
@@ -111,11 +111,11 @@ const DiscordPresence: NextPage = () => {
                         alt="discord-activity"
                         src={
                           activityToDisplay?.assets.small_image.startsWith(
-                            "mp:external/"
+                            "mp:external/",
                           )
                             ? `https://media.discordapp.net/external/${activityToDisplay?.assets.small_image.replace(
                                 "mp:external/",
-                                ""
+                                "",
                               )}`
                             : `https://cdn.discordapp.com/app-assets/${activityToDisplay?.application_id}/${activityToDisplay?.assets.small_image}.webp`
                         }

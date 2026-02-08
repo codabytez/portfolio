@@ -3,6 +3,7 @@ import { Fira_Code as firaCode } from "next/font/google";
 import "./globals.css";
 import MyApp from "@/components/app";
 import CustomCursor from "@/components/UI/custom-cursor";
+import { ConvexClientProvider } from "@/providers/ConvexClientProvider";
 
 const fira = firaCode({
   variable: "--font-fira-code",
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fira.variable}>
-        <CustomCursor />
-        <MyApp>{children}</MyApp>
+        <ConvexClientProvider>
+          <CustomCursor />
+          <MyApp>{children}</MyApp>
+        </ConvexClientProvider>
       </body>
     </html>
   );

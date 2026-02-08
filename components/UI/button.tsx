@@ -24,6 +24,7 @@ const Button: NextPage<IButtonProps> = ({
         href={href}
         className={`text-sm md-text-base rounded-lg px-3.5 py-2.5 shadow-md transition-all duration-300 ${btnVariant} ${className}`}
         target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : undefined}
       >
         {children}
       </Link>

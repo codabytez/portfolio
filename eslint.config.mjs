@@ -10,7 +10,7 @@ const eslintConfig = defineConfig([
   {
     rules: {
       // Prettier
-      "prettier/prettier": ["error", { trailingComma: "es5" }],
+      "prettier/prettier": ["error"],
 
       // Console & Debugger
       "no-console": ["error", { allow: ["warn", "error"] }], // Allow console.warn and console.error

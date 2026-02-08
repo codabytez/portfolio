@@ -161,7 +161,7 @@ const AboutSidebar: NextPage<IAboutSidebarProps> = ({
                       ? "experience"
                       : name === "hobbies"
                         ? "sports"
-                        : "bio"
+                        : "bio",
                   )
                 }
                 className={`${

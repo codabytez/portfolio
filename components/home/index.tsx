@@ -3,8 +3,23 @@ import { NextPage } from "next";
 import Details from "./details";
 import GameBoard from "./game-board";
 import { AnimatePresence, motion } from "framer-motion";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { LoadingAnimation } from "../UI/loading";
 
 const Home: NextPage = () => {
+  const profile = useQuery(api.queries.getProfile);
+  const settings = useQuery(api.queries.getSettings);
+  const isProfileLoading = profile === undefined || settings === undefined;
+
+  if (isProfileLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <LoadingAnimation />
+      </div>
+    );
+  }
+
   return (
     <AnimatePresence>
       <motion.div
@@ -21,7 +36,12 @@ const Home: NextPage = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex h-[400px] lg:h-full"
         >
-          <Details />
+          <Details
+            name={profile?.name || ""}
+            title={`> ${profile?.title}`}
+            githubLink={settings?.github || ""}
+            resumeLink={settings?.resume || ""}
+          />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: "100vw" }}

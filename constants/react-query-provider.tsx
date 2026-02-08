@@ -19,7 +19,7 @@ export const ReactQueryClientProvider = ({
           },
           mutations: { retry: false },
         },
-      })
+      }),
   );
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

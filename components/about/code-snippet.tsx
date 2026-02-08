@@ -88,7 +88,7 @@ const CodeSnippet: NextPage<{
                       new Date(),
                       {
                         addSuffix: true,
-                      }
+                      },
                     )}
                   </p>
                 </div>

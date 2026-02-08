@@ -83,7 +83,7 @@ export const useUpdateGist = () => {
       const previousGists = queryClient.getQueryData(["gists"]);
       queryClient.setQueryData(["gists"], (old: IGithubGistDataTypes[]) => {
         const index = old.findIndex(
-          (gist: IGithubGistDataTypes) => gist.id === data.id
+          (gist: IGithubGistDataTypes) => gist.id === data.id,
         );
         old[index] = data;
         return old;
@@ -107,7 +107,7 @@ export const useDeleteGist = () => {
       await queryClient.cancelQueries({ queryKey: ["gists"] });
       const previousGists = queryClient.getQueryData(["gists"]);
       queryClient.setQueryData(["gists"], (old: IGithubGistDataTypes[]) =>
-        old.filter((gist: IGithubGistDataTypes) => gist.id !== id)
+        old.filter((gist: IGithubGistDataTypes) => gist.id !== id),
       );
       return { previousGists };
     },

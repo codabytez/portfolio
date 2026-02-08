@@ -7,7 +7,7 @@ export const getAccessToken = async () => {
   return (
     await accessTokenInstance.post(
       "",
-      `grant_type=refresh_token&refresh_token=${refreshToken}`
+      `grant_type=refresh_token&refresh_token=${refreshToken}`,
     )
   ).data;
 };
@@ -19,7 +19,7 @@ export const getNowPlaying = async (accessToken: string) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
   return res.data;
 };
@@ -31,7 +31,7 @@ export const getUserProfile = async (accessToken: string) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
   return res.data;
 };
@@ -43,7 +43,7 @@ export const getTopArtists = async (accessToken: string) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
   return res.data;
 };
