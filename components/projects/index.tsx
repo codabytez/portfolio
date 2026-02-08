@@ -85,7 +85,7 @@ const Projects = () => {
           </button>
         </div>
 
-        <div className="lg:border-t lg:border-line p-10 2xl:p-20 relative overflow-hidden h-full">
+        <div className="lg:border-t lg:border-line p-10 2xl:p-20 relative overflow-hidden">
           {filteredProjects.length === 0 ? (
             <ProjectEmptyState />
           ) : (
